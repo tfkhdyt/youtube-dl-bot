@@ -142,6 +142,7 @@ bot.on('callback_query', (ctx) => {
   const formatCode = ctx.callbackQuery.data;
  
   let loadText;
+  console.log('Downloading');
   ctx.replyWithMarkdown('_Sedang mengunduh..._')
   .then(m => {
     loadText = m.message_id;
@@ -158,13 +159,24 @@ bot.on('callback_query', (ctx) => {
   .then(data => {
     console.log(data);
     ctx.deleteMessage(loadText);
+    console.log('Uploading');
     ctx.replyWithMarkdown('_Sedang mengunggah..._')
     .then(m => {
       loadText = m.message_id;
     });
     const newExt = (ext == 'webm') ? 'mkv' : 'mp4';
-    ctx.replyWithVideo({ 
-      source: `${display_id}-${formatCode}.${newExt}`
+    ctx.replyWithVideo(
+      { 
+        source: `${display_id}-${formatCode}.${newExt}`
+      },
+      {
+        ...Markup.inlineKeyboard([[
+          Markup.button.url('💵 Donasi', 'https://donate.tfkhdyt.my.id/'),
+          Markup.button.url('💻 Source Code', 'https://github.com/tfkhdyt/anime-naon-ieu')
+        ],[
+          Markup.button.url('💠 Project saya yang lainnya', 'https://tfkhdyt.my.id/#portfolio')
+        ]
+      ]) 
     })
     .then(() => {
       ctx.deleteMessage(loadText);
@@ -173,7 +185,17 @@ bot.on('callback_query', (ctx) => {
         if (err) throw err;
         console.log("File removed:", path);
       });
-      youtubedl({ rmCacheDir: true });
+      youtubedl(url, { 
+        rmCacheDir: true,
+        simulate: true,
+        dumpSingleJson: true,
+        noWarnings: true,
+        noCallHome: true,
+        noCheckCertificate: true,
+        preferFreeFormats: true,
+        youtubeSkipDashManifest: true
+      })
+      .then(res => console.log(res));
     });
   });
 });
