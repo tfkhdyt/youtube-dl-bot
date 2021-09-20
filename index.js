@@ -3,6 +3,7 @@ const { Telegraf, Markup } = require('telegraf');
 const { Composer } = require('micro-bot');
 const { Keyboard, Key } = require('telegram-keyboard');
 const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -56,7 +57,7 @@ const convertToICS = (labelValue) => {
   : Math.abs(Number(labelValue));
 };
 
-const getMetadata = link => {
+const getMetadata = (link, ctx) => {
   return youtubedl(link, {
     dumpSingleJson: true,
     noWarnings: true,
@@ -65,7 +66,8 @@ const getMetadata = link => {
     preferFreeFormats: true,
     youtubeSkipDashManifest: true
   })
-  .then(data => data);
+  .then(data => data)
+  .catch(err => ctx.reply('Video tidak ditemukan, pastikan link video tersebut sudah benar! 🙏🏼'));
 };
 
 const formatBytes = (bytes, decimals = 2) => {
@@ -103,18 +105,25 @@ const showQuality = formats => {
   }).inline();
 };
 
-bot.start((ctx) => ctx.reply(`Halo ${ctx.from.first_name}, selamat datang di YT-DL Bot, kirim link video yang ingin anda unduh untuk mengunduh video tersebut.`));
+const validation = url => {
+  return url.includes('youtu') && url.includes('be');
+};
+
+bot.start((ctx) => ctx.replyWithMarkdown(`Halo ${ctx.from.first_name}, selamat datang di YT-DL Bot, kirim link video yang ingin anda unduh untuk mengunduh video tersebut.
+
+*PERHATIAN*: Dikarenakan storage hosting yang terbatas, maka kalian tidak dapat mengunduh video yang memiliki ukuran di atas *500 MB*`));
 
 bot.command('help', (ctx) => ctx.reply(`Anda hanya perlu mengirimkan link dari video yang ingin diunduh`));
 
-let display_id, ext;
+let display_id;
 bot.on('text', async (ctx) => {
   url = ctx.message.text;
-  const data = await getMetadata(url);
+  if(!validation(url)) return ctx.reply('Harap masukkan link yang valid! 🙏🏼');
+  const data = await getMetadata(url, ctx);
+  // console.log(data);
   const formats = getFormats(data.formats);
   
   display_id = data.display_id;
-  ext = data.ext;
   const judul = data.title;
   const tanggal = dateFormatter(data.upload_date);
   const channel = data.channel;
@@ -188,7 +197,6 @@ bot.on('callback_query', (ctx) => {
       youtubedl(url, { 
         rmCacheDir: true,
         simulate: true,
-        dumpSingleJson: true,
         noWarnings: true,
         noCallHome: true,
         noCheckCertificate: true,
