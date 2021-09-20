@@ -11,6 +11,7 @@ const NODE_ENV = process.env.NODE_ENV;
 const BOT_TOKEN = process.env.BOT_TOKEN;
 let url;
 
+// Atur mode
 switch (NODE_ENV) {
   case 'development': bot = new Telegraf(BOT_TOKEN); break;
   case 'production': bot = new Composer(); break;
@@ -95,7 +96,6 @@ const showQuality = formats => {
     const id = format.format_id;
     const quality = format.format_note;
     const fps = format.fps;
-    // const extension = format.ext;
     const vcodec = format.vcodec.substring(0, 4).toUpperCase();
     const fileSize = formatBytes(format.filesize + audioFileSize);
     return Key.callback(`${quality} | ${vcodec} | ${fileSize}`, id);
@@ -120,8 +120,8 @@ let display_id;
 bot.on('text', async (ctx) => {
   url = ctx.message.text;
   if(!validation(url)) return ctx.reply('Harap masukkan link yang valid! 🙏🏼');
+  
   const data = await getMetadata(url, ctx);
-  // console.log(data);
   const formats = getFormats(data.formats);
   
   display_id = data.display_id;
@@ -155,7 +155,7 @@ bot.on('callback_query', (ctx) => {
   const formatCode = ctx.callbackQuery.data;
  
   let loadText;
-  console.log('Downloading');
+  console.log('Downloading...');
   ctx.replyWithMarkdown('_Sedang mengunduh..._')
   .then(m => {
     loadText = m.message_id;
@@ -170,15 +170,15 @@ bot.on('callback_query', (ctx) => {
     youtubeSkipDashManifest: true
   })
   .then(data => {
-    console.log(data);
+    // console.log(data);
     ctx.deleteMessage(loadText);
-    console.log('Uploading');
+    console.log('Uploading...');
     ctx.replyWithMarkdown('_Sedang mengunggah..._')
     .then(m => {
       loadText = m.message_id;
     });
     const newExt = path.extname(glob.sync(`${display_id}-${formatCode}.*`)[0]).substring(1);
-    console.log(newExt);
+    // console.log(newExt);
     
     ctx.replyWithVideo(
       { 
