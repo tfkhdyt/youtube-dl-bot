@@ -17,6 +17,7 @@ switch (NODE_ENV) {
   case 'production': bot = new Composer(); break;
 } 
 
+// functions
 const monthNumberToString = month => {
   switch(month){
     case '01': return 'Januari';
@@ -59,6 +60,7 @@ const convertToICS = (labelValue) => {
   : Math.abs(Number(labelValue));
 };
 
+let loadText;
 const getMetadata = (link, ctx) => {
   return youtubedl(link, {
     dumpSingleJson: true,
@@ -69,7 +71,10 @@ const getMetadata = (link, ctx) => {
     youtubeSkipDashManifest: true
   })
   .then(data => data)
-  .catch(err => ctx.reply('Video tidak ditemukan, pastikan link video tersebut sudah benar! 🙏🏼'));
+  .catch(err => {
+    ctx.deleteMessage(loadText);
+    ctx.reply('Video tidak ditemukan, pastikan link video tersebut sudah benar! 🙏🏼');
+  });
 };
 
 const formatBytes = (bytes, decimals = 2) => {
@@ -110,22 +115,32 @@ const validation = url => {
   return url.includes('youtu') && url.includes('be');
 };
 
+// command start
 bot.start((ctx) => ctx.replyWithMarkdown(`Halo ${ctx.from.first_name}, selamat datang di YT-DL Bot, kirim link video yang ingin anda unduh untuk mengunduh video tersebut.
 
 *PERHATIAN*: Dikarenakan storage hosting yang terbatas, maka kalian tidak dapat mengunduh video yang memiliki ukuran di atas *500 MB*`));
 
+// command help
 bot.command('help', (ctx) => ctx.reply(`Anda hanya perlu mengirimkan link dari video yang ingin diunduh`));
 
-let display_id;
+// command utama
+let display_id, judul;
 bot.on('text', async (ctx) => {
+  ctx.replyWithMarkdown('_🔎 Sedang mencari..._')
+  .then(res => {
+    loadText = res.message_id;
+  });
   url = ctx.message.text;
-  if(!validation(url)) return ctx.reply('Harap masukkan link yang valid! 🙏🏼');
+  if(!validation(url)) {
+    ctx.deleteMessage(loadText);
+    return ctx.reply('Harap masukkan link yang valid! 🙏🏼');
+  }
   
   const data = await getMetadata(url, ctx);
   const formats = getFormats(data.formats);
   
   display_id = data.display_id;
-  const judul = data.title;
+  judul = data.title;
   const tanggal = dateFormatter(data.upload_date);
   const channel = data.channel;
   const durasi = secondsToTimestamp(data.duration);
@@ -144,25 +159,26 @@ bot.on('text', async (ctx) => {
 👍🏼 *Jumlah like*: \`${jmlLike} (${persenLike})\`
 👎🏼 *Jumlah dislike*: \`${jmlDislike} (${persenDislike})\``;
 
+  ctx.deleteMessage(loadText);
   ctx.replyWithMarkdown(metadata, {
     reply_to_message_id: messageId
   });
   ctx.reply(`🎥 Pilih kualitas: `, showQuality(formats));
 });
 
+// callback
 bot.on('callback_query', (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
   const formatCode = ctx.callbackQuery.data;
  
-  let loadText;
   console.log('Downloading...');
-  ctx.replyWithMarkdown('_Sedang mengunduh..._')
+  ctx.replyWithMarkdown('_⬇️ Sedang mengunduh..._')
   .then(m => {
     loadText = m.message_id;
   });
   youtubedl(url, {
     format: `${formatCode}+140`,
-    output: `%(id)s-${formatCode}`,
+    output: `%(title)s-%(id)s-${formatCode}`,
     noWarnings: true,
     noCallHome: true,
     noCheckCertificate: true,
@@ -173,16 +189,16 @@ bot.on('callback_query', (ctx) => {
     // console.log(data);
     ctx.deleteMessage(loadText);
     console.log('Uploading...');
-    ctx.replyWithMarkdown('_Sedang mengunggah..._')
+    ctx.replyWithMarkdown('_⬆️ Sedang mengunggah..._')
     .then(m => {
       loadText = m.message_id;
     });
-    const newExt = path.extname(glob.sync(`${display_id}-${formatCode}.*`)[0]).substring(1);
+    const newExt = path.extname(glob.sync(`*${display_id}-${formatCode}.*`)[0]).substring(1);
     // console.log(newExt);
     
     ctx.replyWithVideo(
       { 
-        source: `${display_id}-${formatCode}.${newExt}`
+        source: `${judul}-${display_id}-${formatCode}.${newExt}`
       },
       {
         ...Markup.inlineKeyboard([[
@@ -195,7 +211,7 @@ bot.on('callback_query', (ctx) => {
     })
     .then(() => {
       ctx.deleteMessage(loadText);
-      const path = './' + `${display_id}-${formatCode}.${newExt}`;
+      const path = './' + `${judul}-${display_id}-${formatCode}.${newExt}`;
       fs.unlink(path, (err) => {
         if (err) throw err;
         console.log("File removed:", path);
