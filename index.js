@@ -212,10 +212,10 @@ bot.on('callback_query', (ctx) => {
     .then(() => {
       ctx.deleteMessage(textLoad);
       const path = './' + fileToUpload;
-      fs.unlink(path, (err) => {
-        if (err) throw err;
-        console.log("File removed:", path);
-      });
+      // fs.unlink(path, (err) => {
+      //   if (err) throw err;
+      //   console.log("File removed:", path);
+      // });
       youtubedl(url, { 
         rmCacheDir: true,
         simulate: true,
