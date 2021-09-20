@@ -1,4 +1,7 @@
 const youtubedl = require('youtube-dl-exec');
+const { Telegraf, Markup } = require('telegraf');
+const { Composer } = require('micro-bot');
+require('dotenv').config();
 
 const monthNumberToString = month => {
   switch(month){
@@ -43,7 +46,7 @@ const convertToICS = (labelValue) => {
 };
 
 const getMetadata = link => {
-  return youtubedl('https://m.youtube.com/watch?v=oL_ePYZ1IZY', {
+  return youtubedl(link, {
     dumpSingleJson: true,
     noWarnings: true,
     noCallHome: true,
@@ -96,14 +99,14 @@ const getFormats = formats => {
   
   const formats = await getFormats(data.formats);
   
-  const metadata = `Judul: ${judul}
-Tanggal: ${tanggal}
-Channel: ${channel}
-Durasi: ${durasi}
-Jumlah penonton: ${jmlPenonton}
-Jumlah like: ${jmlLike}
-Jumlah dislike: ${jmlDislike}`;
+  const metadata = `📄 Judul: ${judul}
+👨🏻 Channel: ${channel}
+🗓️ Tanggal: ${tanggal}
+🕖 Durasi: ${durasi}
+👀 Jumlah penonton: ${jmlPenonton}
+👍🏼 Jumlah like: ${jmlLike}
+👎🏼 Jumlah dislike: ${jmlDislike}`;
 
   console.log(metadata + '\n');
-  console.log('Pilih kualitas:\n' + formats);
+  console.log('🎥 Pilih kualitas:\n' + formats);
 })();
