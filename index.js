@@ -197,7 +197,7 @@ bot.on('callback_query', (ctx) => {
     });
     ctx.replyWithVideo(
       { 
-        source: fileToUpload
+        source: `${display_id}-${formatCode}.mp4`
       },
       {
         ...Markup.inlineKeyboard([[
