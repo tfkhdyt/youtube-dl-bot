@@ -172,7 +172,7 @@ bot.on('callback_query', (ctx) => {
   });
   youtubedl(url, {
     format: `${formatCode}+140`,
-    output: `%(title)s-%(id)s-${formatCode}`,
+    output: `%(id)s-${formatCode}`,
     mergeOutputFormat: 'mp4'
   })
   .then(data => {
@@ -182,11 +182,10 @@ bot.on('callback_query', (ctx) => {
     ctx.replyWithMarkdown('_⬆️ Sedang mengunggah..._')
     .then(m => {
       textLoad = m.message_id;
-      
     });
     // const newExt = path.extname(glob.sync(`*${display_id}-${formatCode}.*`)[0]).substring(1);
     // const fileToUpload = glob.sync(`*-${display_id}-${formatCode}.m*`)[0];
-    const fileToUpload = glob.sync(`*${formatCode}.mp4`)[0];
+    const fileToUpload = `${display_id}-${formatCode}.mp4`;
     console.log(fileToUpload);
     fs.readdir('./', (err, files) => {
       if (err) throw err;
