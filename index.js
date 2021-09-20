@@ -3,13 +3,14 @@ const { Telegraf, Markup } = require('telegraf');
 const { Composer } = require('micro-bot');
 const { Keyboard, Key } = require('telegram-keyboard');
 const fs = require('fs');
-const path = require('path');
+// const path = require('path');
 const glob = require('glob');
 require('dotenv').config();
 
 const NODE_ENV = process.env.NODE_ENV;
 const BOT_TOKEN = process.env.BOT_TOKEN;
 let url;
+let loadText;
 
 // Atur mode
 switch (NODE_ENV) {
@@ -60,7 +61,6 @@ const convertToICS = (labelValue) => {
   : Math.abs(Number(labelValue));
 };
 
-let loadText;
 const getMetadata = (link, ctx) => {
   return youtubedl(link, {
     dumpSingleJson: true,
@@ -72,8 +72,8 @@ const getMetadata = (link, ctx) => {
   })
   .then(data => data)
   .catch(err => {
-    ctx.deleteMessage(loadText);
-    ctx.reply('Video tidak ditemukan, pastikan link video tersebut sudah benar! 🙏🏼');
+    ctx.deleteMessage(textLoad);
+    return ctx.reply('Video tidak ditemukan, pastikan link video tersebut sudah benar! 🙏🏼');
   });
 };
 
@@ -111,10 +111,6 @@ const showQuality = formats => {
   }).inline();
 };
 
-const validation = url => {
-  return url.includes('youtu') && url.includes('be');
-};
-
 // command start
 bot.start((ctx) => ctx.replyWithMarkdown(`Halo ${ctx.from.first_name}, selamat datang di YT-DL Bot, kirim link video yang ingin anda unduh untuk mengunduh video tersebut.
 
@@ -126,17 +122,14 @@ bot.command('help', (ctx) => ctx.reply(`Anda hanya perlu mengirimkan link dari v
 // command utama
 let display_id, judul;
 bot.on('text', async (ctx) => {
-  ctx.replyWithMarkdown('_🔎 Sedang mencari..._')
-  .then(res => {
-    loadText = res.message_id;
-  });
   url = ctx.message.text;
-  if(!validation(url)) {
-    ctx.deleteMessage(loadText);
-    setTimeout(() => {
-      return ctx.reply('Harap masukkan link yang valid! 🙏🏼');
-    }, 100);
-  }
+  const messageId = ctx.update.message.message_id;
+  ctx.replyWithMarkdown('_🔎 Sedang mencari..._', {reply_to_message_id : messageId})
+  .then(m => {
+    textLoad = m.message_id;
+  });
+  
+  // console.log(textLoad);
   
   const data = await getMetadata(url, ctx);
   const formats = getFormats(data.formats);
@@ -151,7 +144,6 @@ bot.on('text', async (ctx) => {
   const jmlDislike = convertToICS(data.dislike_count);
   const persenLike = (data.like_count / (data.like_count + data.dislike_count) * 100).toFixed(1) + '%';
   const persenDislike = (data.dislike_count / (data.like_count + data.dislike_count) * 100).toFixed(1) + '%';
-  const messageId = ctx.update.message.message_id;
   
   const metadata = `📄 *Judul*: \`${judul}\`
 👨🏻 *Channel*: \`${channel}\`
@@ -161,7 +153,7 @@ bot.on('text', async (ctx) => {
 👍🏼 *Jumlah like*: \`${jmlLike} (${persenLike})\`
 👎🏼 *Jumlah dislike*: \`${jmlDislike} (${persenDislike})\``;
 
-  ctx.deleteMessage(loadText);
+  ctx.deleteMessage(textLoad);
   ctx.replyWithMarkdown(metadata, {
     reply_to_message_id: messageId
   });
@@ -176,7 +168,7 @@ bot.on('callback_query', (ctx) => {
   console.log('Downloading...');
   ctx.replyWithMarkdown('_⬇️ Sedang mengunduh..._')
   .then(m => {
-    loadText = m.message_id;
+    textLoad = m.message_id;
   });
   youtubedl(url, {
     format: `${formatCode}+140`,
@@ -189,18 +181,19 @@ bot.on('callback_query', (ctx) => {
   })
   .then(data => {
     // console.log(data);
-    ctx.deleteMessage(loadText);
+    ctx.deleteMessage(textLoad);
     console.log('Uploading...');
     ctx.replyWithMarkdown('_⬆️ Sedang mengunggah..._')
     .then(m => {
-      loadText = m.message_id;
+      textLoad = m.message_id;
     });
-    const newExt = path.extname(glob.sync(`*${display_id}-${formatCode}.*`)[0]).substring(1);
+    // const newExt = path.extname(glob.sync(`*${display_id}-${formatCode}.*`)[0]).substring(1);
+    const fileToUpload = glob.sync(`*${display_id}-${formatCode}.*`)[0];
     // console.log(newExt);
     
     ctx.replyWithVideo(
       { 
-        source: `${judul}-${display_id}-${formatCode}.${newExt}`
+        source: `${fileToUpload}`
       },
       {
         ...Markup.inlineKeyboard([[
@@ -212,8 +205,8 @@ bot.on('callback_query', (ctx) => {
       ]) 
     })
     .then(() => {
-      ctx.deleteMessage(loadText);
-      const path = './' + `${judul}-${display_id}-${formatCode}.${newExt}`;
+      ctx.deleteMessage(textLoad);
+      const path = './' + `${fileToUpload}`;
       fs.unlink(path, (err) => {
         if (err) throw err;
         console.log("File removed:", path);
