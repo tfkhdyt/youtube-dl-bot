@@ -901,6 +901,11 @@ telegraf@^4.4.2:
     sandwich-stream "^2.0.2"
     typegram "^3.4.2"
 
+telegram-keyboard@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/telegram-keyboard/-/telegram-keyboard-2.2.6.tgz#56e3c5d137938e3fd673843475280ecc70ea4d40"
+  integrity sha512-rfJn55Nwt5w2aWagtxCUnN4AM/6tK+SRO89NolfRuJD8XiPB4IDRxP7nqekodSEkvvUpSmmQxrRG8ZheHdUYqQ==
+
 trim-newlines@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-3.0.1.tgz#260a5d962d8b752425b32f3a7db0dcacd176c144"

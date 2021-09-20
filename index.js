@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const NODE_ENV = process.env.NODE_ENV;
 const BOT_TOKEN = process.env.BOT_TOKEN;
+let url;
 
 switch (NODE_ENV) {
   case 'development': bot = new Telegraf(BOT_TOKEN); break;
@@ -93,8 +94,38 @@ const getFormats = formats => {
   }).join('\n');
 };
 
-(async () => {
-  const url = 'https://m.youtube.com/watch?v=fM1xZlEiyk8';
+// (async () => {
+//   const url = 'https://m.youtube.com/watch?v=fM1xZlEiyk8';
+//   const data = await getMetadata(url);
+  
+//   const judul = data.title;
+//   const tanggal = dateFormatter(data.upload_date);
+//   const channel = data.channel;
+//   const durasi = secondsToTimestamp(data.duration);
+//   const jmlPenonton = convertToICS(data.view_count);
+//   const jmlLike = convertToICS(data.like_count);
+//   const jmlDislike = convertToICS(data.dislike_count);
+  
+//   const formats = await getFormats(data.formats);
+  
+//   const metadata = `Judul: ${judul}
+// Channel: ${channel}
+// 🗓️ Tangga di-uploadl: ${tanggal}
+// 🕖 Durasi: ${durasi}
+// 👀 Jumlah penonton: ${jmlPenonton}
+// 👍🏼 Jumlah like: ${jmlLike}
+// 👎🏼 Jumlah dislike: ${jmlDislike}`;
+
+//   console.log(metadata + '\n');
+//   console.log('🎥 Pilih kualitas:\n' + formats);
+// })();
+
+bot.start((ctx) => ctx.reply(`Halo ${ctx.from.first_name}, selamat datang di YT-DL Bot, kirim link video yang ingin anda download untuk mendownload video tersebut.`));
+
+bot.command('help', (ctx) => ctx.reply(`Anda hanya perlu mengirimkan link dari video yang ingin di-download`));
+
+bot.on('text', async (ctx) => {
+  url = ctx.message.text;
   const data = await getMetadata(url);
   
   const judul = data.title;
@@ -104,20 +135,22 @@ const getFormats = formats => {
   const jmlPenonton = convertToICS(data.view_count);
   const jmlLike = convertToICS(data.like_count);
   const jmlDislike = convertToICS(data.dislike_count);
+  const persenLike = (data.like_count / (data.like_count + data.dislike_count) * 100).toFixed(1) + '%';
+  const persenDislike = (data.dislike_count / (data.like_count + data.dislike_count) * 100).toFixed(1) + '%';
   
   const formats = await getFormats(data.formats);
   
-  const metadata = `📄 Judul: ${judul}
-👨🏻 Channel: ${channel}
-🗓️ Tanggal: ${tanggal}
-🕖 Durasi: ${durasi}
-👀 Jumlah penonton: ${jmlPenonton}
-👍🏼 Jumlah like: ${jmlLike}
-👎🏼 Jumlah dislike: ${jmlDislike}`;
+  const metadata = `📄 *Judul*: \`${judul}\`
+👨🏻 *Channel*: \`${channel}\`
+📆 *Tanggal di-upload*: \`${tanggal}\`
+🕖 *Durasi*: \`${durasi}\`
+👀 *Jumlah penonton*: \`${jmlPenonton}\`
+👍🏼 *Jumlah like*: \`${jmlLike} (${persenLike})\`
+👎🏼 *Jumlah dislike*: \`${jmlDislike} (${persenDislike})\``;
 
-  console.log(metadata + '\n');
-  console.log('🎥 Pilih kualitas:\n' + formats);
-})();
+  ctx.replyWithMarkdown(metadata + '\n');
+  ctx.reply('🎥 Pilih kualitas:\n' + formats);
+});
 
 switch (NODE_ENV) {
   case 'development': bot.launch(); break;
