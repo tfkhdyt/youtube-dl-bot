@@ -3,6 +3,14 @@ const { Telegraf, Markup } = require('telegraf');
 const { Composer } = require('micro-bot');
 require('dotenv').config();
 
+const NODE_ENV = process.env.NODE_ENV;
+const BOT_TOKEN = process.env.BOT_TOKEN;
+
+switch (NODE_ENV) {
+  case 'development': bot = new Telegraf(BOT_TOKEN); break;
+  case 'production': bot = new Composer(); break;
+} 
+
 const monthNumberToString = month => {
   switch(month){
     case '01': return 'Januari';
@@ -110,3 +118,8 @@ const getFormats = formats => {
   console.log(metadata + '\n');
   console.log('🎥 Pilih kualitas:\n' + formats);
 })();
+
+switch (NODE_ENV) {
+  case 'development': bot.launch(); break;
+  case 'production': module.exports = bot; break;
+}
