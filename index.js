@@ -172,7 +172,7 @@ bot.on('callback_query', (ctx) => {
       {
         ...Markup.inlineKeyboard([[
           Markup.button.url('💵 Donasi', 'https://donate.tfkhdyt.my.id/'),
-          Markup.button.url('💻 Source Code', 'https://github.com/tfkhdyt/anime-naon-ieu')
+          Markup.button.url('💻 Source Code', 'https://github.com/tfkhdyt/youtube-dl-bot/')
         ],[
           Markup.button.url('💠 Project saya yang lainnya', 'https://tfkhdyt.my.id/#portfolio')
         ]
