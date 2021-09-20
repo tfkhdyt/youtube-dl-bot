@@ -172,8 +172,9 @@ bot.on('callback_query', (ctx) => {
   });
   youtubedl(url, {
     format: `${formatCode}+140`,
+    mergeOutputFormat: 'mp4',
     output: `%(id)s-${formatCode}`,
-    mergeOutputFormat: 'mp4'
+    ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg"
   })
   .then(data => {
     console.log(data);
@@ -186,7 +187,7 @@ bot.on('callback_query', (ctx) => {
     // const newExt = path.extname(glob.sync(`*${display_id}-${formatCode}.*`)[0]).substring(1);
     // const fileToUpload = glob.sync(`*-${display_id}-${formatCode}.m*`)[0];
     const fileToUpload = `${display_id}-${formatCode}.mp4`;
-    console.log(fileToUpload);
+    // console.log(fileToUpload);
     fs.readdir('./', (err, files) => {
       if (err) throw err;
       // files object contains all files names
