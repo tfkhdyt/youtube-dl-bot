@@ -133,7 +133,9 @@ bot.on('text', async (ctx) => {
   url = ctx.message.text;
   if(!validation(url)) {
     ctx.deleteMessage(loadText);
-    return ctx.reply('Harap masukkan link yang valid! 🙏🏼');
+    setTimeout(() => {
+      return ctx.reply('Harap masukkan link yang valid! 🙏🏼');
+    }, 100);
   }
   
   const data = await getMetadata(url, ctx);
