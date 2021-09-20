@@ -189,11 +189,11 @@ bot.on('callback_query', (ctx) => {
     });
     // const newExt = path.extname(glob.sync(`*${display_id}-${formatCode}.*`)[0]).substring(1);
     const fileToUpload = glob.sync(`*${display_id}-${formatCode}.*`)[0];
-    // console.log(newExt);
+    console.log(fileToUpload);
     
     ctx.replyWithVideo(
       { 
-        source: `${fileToUpload}`
+        source: fileToUpload
       },
       {
         ...Markup.inlineKeyboard([[
@@ -206,7 +206,7 @@ bot.on('callback_query', (ctx) => {
     })
     .then(() => {
       ctx.deleteMessage(textLoad);
-      const path = './' + `${fileToUpload}`;
+      const path = './' + fileToUpload;
       fs.unlink(path, (err) => {
         if (err) throw err;
         console.log("File removed:", path);
