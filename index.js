@@ -172,20 +172,16 @@ bot.on('callback_query', (ctx) => {
   });
   youtubedl(url, {
     format: `${formatCode}+140`,
-    output: `%(title)s-%(id)s-${formatCode}`,
-    noWarnings: true,
-    noCallHome: true,
-    noCheckCertificate: true,
-    preferFreeFormats: true,
-    youtubeSkipDashManifest: true
+    output: `%(title)s-%(id)s-${formatCode}`
   })
   .then(data => {
-    // console.log(data);
+    console.log(data);
     ctx.deleteMessage(textLoad);
     console.log('Uploading...');
     ctx.replyWithMarkdown('_⬆️ Sedang mengunggah..._')
     .then(m => {
       textLoad = m.message_id;
+      
     });
     // const newExt = path.extname(glob.sync(`*${display_id}-${formatCode}.*`)[0]).substring(1);
     // const fileToUpload = glob.sync(`*-${display_id}-${formatCode}.m*`)[0];
