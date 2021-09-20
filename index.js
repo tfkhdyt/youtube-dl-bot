@@ -188,7 +188,8 @@ bot.on('callback_query', (ctx) => {
       textLoad = m.message_id;
     });
     // const newExt = path.extname(glob.sync(`*${display_id}-${formatCode}.*`)[0]).substring(1);
-    const fileToUpload = glob.sync(`*-${display_id}-${formatCode}.m*`)[0];
+    // const fileToUpload = glob.sync(`*-${display_id}-${formatCode}.m*`)[0];
+    const fileToUpload = glob.sync(`*.m*`)[0];
     console.log(fileToUpload);
     
     ctx.replyWithVideo(
