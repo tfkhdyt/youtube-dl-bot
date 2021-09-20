@@ -54,8 +54,36 @@ const getMetadata = link => {
   .then(data => data);
 };
 
-const main = async () => {
-  const url = 'https://m.youtube.com/watch?v=oL_ePYZ1IZY';
+const formatBytes = (bytes, decimals = 2) => {
+  if (bytes === 0) return '0 Bytes';
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+};
+
+const getFormats = formats => {
+  const audio = formats.find(format => format.format_id == '140');
+  const audioFileSize = audio.filesize;
+  return formats.filter(format => format.fps != null && format.acodec == 'none')
+  .map(format => {
+    const id = format.format_id;
+    const quality = format.format_note;
+    const fps = format.fps;
+    // const extension = format.ext;
+    const vcodec = format.vcodec;
+    const fileSize = formatBytes(format.filesize + audioFileSize);
+    
+    return `${quality} | ${fps} FPS | ${vcodec} | ${fileSize}`;
+  }).join('\n');
+};
+
+(async () => {
+  const url = 'https://m.youtube.com/watch?v=fM1xZlEiyk8';
   const data = await getMetadata(url);
   
   const judul = data.title;
@@ -66,6 +94,8 @@ const main = async () => {
   const jmlLike = convertToICS(data.like_count);
   const jmlDislike = convertToICS(data.dislike_count);
   
+  const formats = await getFormats(data.formats);
+  
   const metadata = `Judul: ${judul}
 Tanggal: ${tanggal}
 Channel: ${channel}
@@ -74,7 +104,6 @@ Jumlah penonton: ${jmlPenonton}
 Jumlah like: ${jmlLike}
 Jumlah dislike: ${jmlDislike}`;
 
-  console.log(metadata);
-};
-
-main();
+  console.log(metadata + '\n');
+  console.log('Pilih kualitas:\n' + formats);
+})();
