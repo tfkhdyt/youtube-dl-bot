@@ -15,6 +15,7 @@
     "micro-bot": "^2.5.3",
     "telegraf": "^4.4.2",
     "telegram-keyboard": "^2.2.6",
-    "youtube-dl-exec": "^1.2.6"
+    "youtube-dl-exec": "^1.2.6",
+    "ffmpeg-static": "^4.4.0"
   }
 }
