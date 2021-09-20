@@ -191,7 +191,14 @@ bot.on('callback_query', (ctx) => {
     // const fileToUpload = glob.sync(`*-${display_id}-${formatCode}.m*`)[0];
     const fileToUpload = glob.sync(`*.m*`)[0];
     console.log(fileToUpload);
-    
+    fs.readdir('./', (err, files) => {
+      if (err) throw err;
+      // files object contains all files names
+      // log them on console
+      files.forEach(file => {
+        console.log(file);
+      });
+    });
     ctx.replyWithVideo(
       { 
         source: fileToUpload
