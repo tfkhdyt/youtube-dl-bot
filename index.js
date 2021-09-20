@@ -4,6 +4,7 @@ const { Composer } = require('micro-bot');
 const { Keyboard, Key } = require('telegram-keyboard');
 const fs = require('fs');
 const path = require('path');
+const glob = require('glob');
 require('dotenv').config();
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -173,7 +174,9 @@ bot.on('callback_query', (ctx) => {
     .then(m => {
       loadText = m.message_id;
     });
-    const newExt = (ext == 'webm') ? 'mkv' : 'mp4';
+    const newExt = path.extname(glob.sync(`${display_id}-${formatCode}.*`)[0]).substring(1);
+    console.log(newExt);
+    //const newExt = (ext == 'webm') ? 'mkv' : 'mp4';
     ctx.replyWithVideo(
       { 
         source: `${display_id}-${formatCode}.${newExt}`
