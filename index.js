@@ -1,6 +1,7 @@
 const youtubedl = require('youtube-dl-exec');
 const { Telegraf, Markup } = require('telegraf');
 const { Composer } = require('micro-bot');
+const { Keyboard, Key } = require('telegram-keyboard');
 require('dotenv').config();
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -78,20 +79,11 @@ const formatBytes = (bytes, decimals = 2) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };
 
+let audioFileSize;
 const getFormats = formats => {
   const audio = formats.find(format => format.format_id == '140');
-  const audioFileSize = audio.filesize;
-  return formats.filter(format => format.fps != null && format.acodec == 'none')
-  .map(format => {
-    const id = format.format_id;
-    const quality = format.format_note;
-    const fps = format.fps;
-    // const extension = format.ext;
-    const vcodec = format.vcodec;
-    const fileSize = formatBytes(format.filesize + audioFileSize);
-    
-    return `${quality} | ${fps} FPS | ${vcodec} | ${fileSize}`;
-  }).join('\n');
+  audioFileSize = audio.filesize;
+  return formats.filter(format => format.fps != null && format.acodec == 'none');
 };
 
 // (async () => {
@@ -148,8 +140,27 @@ bot.on('text', async (ctx) => {
 👍🏼 *Jumlah like*: \`${jmlLike} (${persenLike})\`
 👎🏼 *Jumlah dislike*: \`${jmlDislike} (${persenDislike})\``;
 
-  ctx.replyWithMarkdown(metadata + '\n');
-  ctx.reply('🎥 Pilih kualitas:\n' + formats);
+  ctx.replyWithMarkdown(metadata);
+  //ctx.reply('🎥 Pilih kualitas:\n' + formats);
+  const keyCallback = formats.map((format) => {
+    const id = format.format_id;
+    const quality = format.format_note;
+    const fps = format.fps;
+    // const extension = format.ext;
+    const vcodec = format.vcodec.substring(0, 4).toUpperCase();
+    const fileSize = formatBytes(format.filesize + audioFileSize);
+    return Key.callback(`${quality} | ${vcodec} | ${fileSize}`, id);
+  });
+  
+  const keyboard = Keyboard.make(keyCallback, {
+    columns: 2
+  }).inline();
+  //console.log(keyboard);
+  ctx.reply(`🎥 Pilih kualitas: `, keyboard);
+});
+
+bot.on('callback_query', (ctx) => {
+  
 });
 
 switch (NODE_ENV) {
