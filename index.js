@@ -134,6 +134,7 @@ bot.on('text', async (ctx) => {
   const jmlDislike = convertToICS(data.dislike_count);
   const persenLike = (data.like_count / (data.like_count + data.dislike_count) * 100).toFixed(1) + '%';
   const persenDislike = (data.dislike_count / (data.like_count + data.dislike_count) * 100).toFixed(1) + '%';
+  const messageId = ctx.update.message.message_id;
   
   const metadata = `📄 *Judul*: \`${judul}\`
 👨🏻 *Channel*: \`${channel}\`
@@ -143,7 +144,9 @@ bot.on('text', async (ctx) => {
 👍🏼 *Jumlah like*: \`${jmlLike} (${persenLike})\`
 👎🏼 *Jumlah dislike*: \`${jmlDislike} (${persenDislike})\``;
 
-  ctx.replyWithMarkdown(metadata);
+  ctx.replyWithMarkdown(metadata, {
+    reply_to_message_id: messageId
+  });
   ctx.reply(`🎥 Pilih kualitas: `, showQuality(formats));
 });
 
@@ -176,7 +179,7 @@ bot.on('callback_query', (ctx) => {
     });
     const newExt = path.extname(glob.sync(`${display_id}-${formatCode}.*`)[0]).substring(1);
     console.log(newExt);
-    //const newExt = (ext == 'webm') ? 'mkv' : 'mp4';
+    
     ctx.replyWithVideo(
       { 
         source: `${display_id}-${formatCode}.${newExt}`
