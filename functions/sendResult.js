@@ -9,6 +9,7 @@ module.exports = async (url, ctx, messageId) => {
   const data = await getMetadata(url, ctx);
   const formats = getFormats(data.formats);
 
+  const judul = data.title;
   const tanggal = dateFormatter(data.upload_date);
   const channel = data.channel;
   const durasi = secondsToTimestamp(data.duration);
