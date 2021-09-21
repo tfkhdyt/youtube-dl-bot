@@ -1,1 +1,1 @@
-web: micro-bot -d $URL
+web: micro-bot -t $BOT_TOKEN -d $BOT_DOMAIN index.js
