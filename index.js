@@ -3,13 +3,12 @@ const { Telegraf, Markup } = require('telegraf');
 const { Composer } = require('micro-bot');
 const { Keyboard, Key } = require('telegram-keyboard');
 const fs = require('fs');
-// const path = require('path');
 const glob = require('glob');
 require('dotenv').config();
 
 const NODE_ENV = process.env.NODE_ENV;
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const BOT_DOMAIN = process.env.BOT_DOMAIN;
+const API_ROOT = process.env.API_ROOT;
 const PORT = process.env.PORT || 3000;
 let url;
 let loadText;
@@ -244,7 +243,7 @@ switch(NODE_ENV) {
     },
     options: {
       telegram: {
-        apiRoot: 'https://telegram-tg-api.herokuapp.com'
+        apiRoot: 'https://tfkhdyt-tg-api.herokuapp.com'
       }
     }
   }; break;
