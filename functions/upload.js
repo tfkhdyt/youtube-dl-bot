@@ -11,7 +11,7 @@ module.exports = (info, formatCode, ctx, url) => {
   });
     
   const fileToUpload = `${info.id}-${formatCode}.mp4`;
-  // console.log(fileToUpload);
+  console.log(fileToUpload);
   fs.readdir('./', (err, files) => {
     if (err) throw err;
     files.forEach(file => {
