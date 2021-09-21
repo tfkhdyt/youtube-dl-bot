@@ -1,3 +1,5 @@
+const formatBytes = require('./functions/formatBytes');
+
 module.exports = formats => {
   const keyCallback = formats.map((format) => {
     const id = format.format_id;

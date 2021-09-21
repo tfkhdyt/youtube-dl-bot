@@ -13,7 +13,6 @@ const secondsToTimestamp = require('./functions/secondsToTimestamp');
 const formatNumber = require('./functions/formatNumber');
 const convertToICS = require('./functions/convertToICS');
 const getMetadata = require('./functions/getMetadata');
-const formatBytes = require('./functions/formatBytes');
 const getFormats = require('./functions/getFormats');
 const showQuality = require('./functions/showQuality');
 
