@@ -236,9 +236,15 @@ switch(NODE_ENV) {
   case 'development': bot.launch(); break;
   case 'production': module.exports = {
     bot: bot,
+    init: (bot) => {
+      console.log('Bot initialization hook')
+    },
+    server: (req, res, next) => {
+      console.log('Http request hook')
+    },
     options: {
       telegram: {
-        apiRoot: 'http://telegram-tg-api.herokuapp.com'
+        apiRoot: 'https://telegram-tg-api.herokuapp.com'
       }
     }
   }; break;
