@@ -14,7 +14,7 @@ module.exports = async (url, formatCode, ctx) => {
     ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg"
   })
   .then((data) => {
-    console.log(data);
+    console.log('Download:', data);
   });
   const id = await youtubedl(url, {
     getId: true,
