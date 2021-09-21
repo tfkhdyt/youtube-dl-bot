@@ -11,7 +11,11 @@ module.exports = (url, formatCode, ctx) => {
     format: `${formatCode}+140`,
     mergeOutputFormat: 'mp4',
     output: `%(id)s-${formatCode}`,
-    ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg"
+    ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg",
+    embedThumbnail: true,
+    allSubs: true,
+    convertSubs: 'srt',
+    embedSubs: true
   })
   .then((data) => {
     console.log(data);
