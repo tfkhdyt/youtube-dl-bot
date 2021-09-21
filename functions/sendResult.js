@@ -6,6 +6,12 @@ const convertToICS = require('./convertToICS');
 const showQuality = require('./showQuality');
 
 module.exports = async (url, ctx, messageId) => {
+  console.log('Searching');
+  ctx.replyWithMarkdown('_🔎 Sedang mencari..._', { reply_to_message_id : messageId })
+  .then(m => {
+    textLoad = m.message_id;
+  });
+  
   const data = await getMetadata(url, ctx);
   const formats = getFormats(data.formats);
 

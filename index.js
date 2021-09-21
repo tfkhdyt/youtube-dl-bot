@@ -7,6 +7,7 @@ require('dotenv').config();
 // import function
 const sendResult = require('./functions/sendResult');
 const download = require('./functions/download');
+const upload = require('./functions/upload');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -39,21 +40,16 @@ bot.on('text', (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
   
-  console.log('Searching');
-  ctx.replyWithMarkdown('_🔎 Sedang mencari..._', { reply_to_message_id : messageId })
-  .then(m => {
-    textLoad = m.message_id;
-  });
-  
   sendResult(url, ctx, messageId);
 });
 
 // callback
-bot.on('callback_query', (ctx) => {
+bot.on('callback_query', async (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
   const formatCode = ctx.callbackQuery.data;
   
-  download(url, formatCode, ctx);
+  const { id, judul } = await download(url, formatCode, ctx);
+  upload(id, judul, formatCode, ctx);
 });
 
 switch(NODE_ENV) {
