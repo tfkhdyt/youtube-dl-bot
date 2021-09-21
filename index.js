@@ -8,8 +8,9 @@ require('dotenv').config();
 
 const NODE_ENV = process.env.NODE_ENV;
 const BOT_TOKEN = process.env.BOT_TOKEN;
+const BOT_DOMAIN = process.env.BOT_DOMAIN;
 const API_ROOT = process.env.API_ROOT;
-const PORT = process.env.PORT || 3000;
+
 let url;
 let loadText;
 
@@ -199,7 +200,8 @@ bot.on('callback_query', (ctx) => {
     });
     ctx.replyWithVideo(
       { 
-        source: fs.createReadStream(fileToUpload)
+        source: fileToUpload,
+        filename: judul + '.mp4'
       },
       {
         ...Markup.inlineKeyboard([[
@@ -234,13 +236,7 @@ bot.on('callback_query', (ctx) => {
 switch(NODE_ENV) {
   case 'development': bot.launch(); break;
   case 'production': module.exports = {
-    bot: bot,
-    init: (bot) => {
-      console.log('Bot initialization hook')
-    },
-    server: (req, res, next) => {
-      console.log('Http request hook')
-    },
+    bot,
     options: {
       telegram: {
         apiRoot: API_ROOT
