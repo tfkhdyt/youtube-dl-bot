@@ -5,8 +5,8 @@ const secondsToTimestamp = require('./secondsToTimestamp');
 const convertToICS = require('./convertToICS');
 const showQuality = require('./showQuality');
 
-module.exports = async (url, ctx) => {
-  const data = await getMetadata(url, ctx, messageId);
+module.exports = async (url, ctx, messageId) => {
+  const data = await getMetadata(url, ctx);
   const formats = getFormats(data.formats);
 
   display_id = data.display_id;
