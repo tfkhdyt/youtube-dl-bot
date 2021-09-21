@@ -3,13 +3,14 @@ const { Telegraf, Markup } = require('telegraf');
 const { Composer } = require('micro-bot');
 const { Keyboard, Key } = require('telegram-keyboard');
 const youtubedl = require('youtube-dl-exec');
-const fs = require('fs');
 const glob = require('glob');
+const fs = require('fs');
 require('dotenv').config();
 
 // inport functions
 const monthNumberToString = require('./functions/monthNumberToString');
 const dateFormatter = require('./functions/dateFormatter');
+const secondsToTimestamp = require('./functions/secondsToTimestamp');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -26,12 +27,6 @@ switch (NODE_ENV) {
 } 
 
 // functions
-
-
-const secondsToTimestamp = seconds => {
-  return new Date(seconds * 1000).toISOString().substr(11, 8);
-};
-
 const formatNumber = num => {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 };
