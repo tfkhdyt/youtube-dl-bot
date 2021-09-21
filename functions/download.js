@@ -15,7 +15,6 @@ module.exports = (url, formatCode, ctx) => {
     dumpSingleJson: true
   })
   .then((data) => {
-    console.log(data);
     ctx.deleteMessage(textLoad);
     return {
       id: data.display_id,
