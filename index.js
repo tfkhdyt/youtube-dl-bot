@@ -14,6 +14,7 @@ const secondsToTimestamp = require('./functions/secondsToTimestamp');
 const formatNumber = require('./functions/formatNumber');
 const convertToICS = require('./functions/convertToICS');
 const getMetadata = require('./functions/getMetadata');
+const formatBytes = require('./functions/formatBytes');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -30,18 +31,6 @@ switch (NODE_ENV) {
 } 
 
 // functions
-
-const formatBytes = (bytes, decimals = 2) => {
-  if (bytes === 0) return '0 Bytes';
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-};
 
 let audioFileSize;
 const getFormats = formats => {
