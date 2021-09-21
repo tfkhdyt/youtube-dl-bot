@@ -200,7 +200,7 @@ bot.on('callback_query', (ctx) => {
     });
     ctx.replyWithVideo(
       { 
-        source: __dirname + '/' + fileToUpload
+        source: fs.createReadStream(fileToUpload)
       },
       {
         ...Markup.inlineKeyboard([[
