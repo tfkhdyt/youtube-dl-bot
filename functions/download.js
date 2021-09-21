@@ -7,7 +7,7 @@ module.exports = (url, formatCode, ctx) => {
   .then(m => {
     textLoad = m.message_id;
   });
-  youtubedl(url, {
+  return youtubedl(url, {
     format: `${formatCode}+140`,
     mergeOutputFormat: 'mp4',
     output: `%(id)s-${formatCode}`,
