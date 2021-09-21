@@ -11,6 +11,7 @@ require('dotenv').config();
 const monthNumberToString = require('./functions/monthNumberToString');
 const dateFormatter = require('./functions/dateFormatter');
 const secondsToTimestamp = require('./functions/secondsToTimestamp');
+const formatNumber = require('./functions/formatNumber');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -27,9 +28,7 @@ switch (NODE_ENV) {
 } 
 
 // functions
-const formatNumber = num => {
-  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-};
+
 
 const convertToICS = (labelValue) => {
   // Nine Zeroes for Billions
