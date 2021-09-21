@@ -1,1 +1,1 @@
-web: micro-bot -d $BOT_DOMAIN -p $PORT
+web: micro-bot -d $BOT_DOMAIN -p 8081
