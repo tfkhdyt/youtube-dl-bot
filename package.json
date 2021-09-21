@@ -11,11 +11,12 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "ffmpeg-static": "^4.4.0",
     "glob": "^7.1.7",
     "micro-bot": "^2.5.3",
     "telegraf": "^4.4.2",
     "telegram-keyboard": "^2.2.6",
-    "youtube-dl-exec": "^1.2.6",
-    "ffmpeg-static": "^4.4.0"
+    "youtube-dl-exec": "^1.2.6"
   }
 }

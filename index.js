@@ -235,15 +235,21 @@ bot.on('callback_query', (ctx) => {
 });
 
 switch (NODE_ENV) {
-  case 'development': bot.launch(); break;
-  // case 'production': module.exports = bot; break;
-  case 'production':
-    bot.telegram.setWebhook(BOT_DOMAIN, { max_connections:999 })
+  case 'development':
     bot.launch({
       webhook: {
-        hookPath: '/',
-        port: process.env.PORT
+        domain: BOT_DOMAIN + '/bot' + BOT_TOKEN,
+        port: Number(process.env.PORT) || 3000
       }
-     }); 
-     break;
+    });
+    break;
+  // case 'production': module.exports = bot; break;
+  case 'production':
+    bot.launch({
+      webhook: {
+        domain: BOT_DOMAIN,
+        port: Number(process.env.PORT) || 3000
+      }
+    });
+    break;
 }
