@@ -1,7 +1,8 @@
 const youtubedl = require('youtube-dl-exec');
 const getMetadata = require('./getMetadata');
+const upload = require('./upload');
 
-module.exports = (url, formatCode, ctx) => {
+module.exports = (url, formatCode, ctx, info) => {
   console.log('Downloading...');
   ctx.replyWithMarkdown('_⬇️ Sedang mengunduh..._')
   .then(m => {
@@ -15,5 +16,6 @@ module.exports = (url, formatCode, ctx) => {
   })
   .then((data) => {
     console.log('Download:', data);
+    upload(info, formatCode, ctx, url);
   });
 };

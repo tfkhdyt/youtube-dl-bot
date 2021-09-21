@@ -10,7 +10,7 @@ module.exports = (path, url) => {
   youtubedl(url,
     {
       rmCacheDir: true,
-      simulate: true,
+      skipDownload: true,
       noWarnings: true,
       noCallHome: true,
       noCheckCertificate: true,

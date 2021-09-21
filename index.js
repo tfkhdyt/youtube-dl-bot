@@ -7,8 +7,6 @@ require('dotenv').config();
 // import function
 const sendResult = require('./functions/sendResult');
 const download = require('./functions/download');
-const upload = require('./functions/upload');
-const clearCache = require('./functions/clearCache');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -16,7 +14,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const API_ROOT = process.env.API_ROOT;
 
 // deklarasi global variables
-let url, id, judul;
+let url, data;
 
 // Atur mode
 switch (NODE_ENV) {
@@ -42,8 +40,10 @@ bot.on('text', async (ctx) => {
   const messageId = ctx.update.message.message_id;
   
   const { tempId, tempJudul } = await sendResult(url, ctx, messageId);
-  id = tempId;
-  judul = tempJudul;
+  data = {
+    id: tempId,
+    judul: tempJudul
+  };
 });
 
 // callback
@@ -51,9 +51,7 @@ bot.on('callback_query', async (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
   const formatCode = ctx.callbackQuery.data;
   
-  await download(url, formatCode, ctx);
-  const path = await upload(id, judul, formatCode, ctx);
-  clearCache(path, url);
+  await download(url, formatCode, ctx, data);
 });
 
 switch(NODE_ENV) {
