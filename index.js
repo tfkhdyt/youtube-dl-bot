@@ -16,7 +16,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const API_ROOT = process.env.API_ROOT;
 
 // deklarasi global variables
-let url, audioFileSize;
+let url, id, judul;
 
 // Atur mode
 switch (NODE_ENV) {
@@ -37,11 +37,13 @@ bot.start((ctx) => ctx.replyWithMarkdown(`Halo ${ctx.from.first_name}, selamat d
 bot.command('help', (ctx) => ctx.reply(`Anda hanya perlu mengirimkan link dari video yang ingin diunduh`));
 
 // command utama
-bot.on('text', (ctx) => {
+bot.on('text', async (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
   
-  sendResult(url, ctx, messageId);
+  const { tempId, tempJudul } = await sendResult(url, ctx, messageId);
+  id = tempId;
+  judul = tempJudul;
 });
 
 // callback
@@ -49,7 +51,7 @@ bot.on('callback_query', async (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
   const formatCode = ctx.callbackQuery.data;
   
-  const { id, judul } = await download(url, formatCode, ctx);
+  await download(url, formatCode, ctx);
   const path = await upload(id, judul, formatCode, ctx);
   clearCache(path, url);
 });
