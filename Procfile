@@ -1,1 +1,1 @@
-web: micro-bot -d "${BOT_DOMAIN}bot${BOT_TOKEN}"
+web: micro-bot -d $URL
