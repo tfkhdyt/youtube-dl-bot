@@ -39,11 +39,11 @@ bot.command('help', (ctx) => ctx.reply(`Anda hanya perlu mengirimkan link dari v
 bot.on('text', (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
-  ctx.replyWithMarkdown('_🔎 Sedang mencari..._', {reply_to_message_id : messageId})
+  ctx.replyWithMarkdown('_🔎 Sedang mencari..._', { reply_to_message_id : messageId })
   .then(m => {
     textLoad = m.message_id;
   });
-  sendResult(url, ctx);
+  sendResult(url, ctx, messageId);
 });
 
 // callback

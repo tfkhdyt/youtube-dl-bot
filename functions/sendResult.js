@@ -6,7 +6,7 @@ const convertToICS = require('./convertToICS');
 const showQuality = require('./showQuality');
 
 module.exports = async (url, ctx) => {
-  const data = await getMetadata(url, ctx);
+  const data = await getMetadata(url, ctx, messageId);
   const formats = getFormats(data.formats);
 
   display_id = data.display_id;
