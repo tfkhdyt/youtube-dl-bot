@@ -6,6 +6,9 @@ const glob = require('glob');
 const fs = require('fs');
 require('dotenv').config();
 
+// import function
+const sendResult = require('./functions/sendResult');
+
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
 const BOT_TOKEN = process.env.BOT_TOKEN;
@@ -36,7 +39,7 @@ bot.on('text', (ctx) => {
   .then(m => {
     textLoad = m.message_id;
   });
-  
+  sendResult(url, ctx);
 });
 
 // callback
