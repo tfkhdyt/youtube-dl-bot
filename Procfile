@@ -1,1 +1,1 @@
-web: micro-bot -p $PORT -d "https://tfkhdyt-tg-api.herokuapp.com"
+web: micro-bot -p $PORT

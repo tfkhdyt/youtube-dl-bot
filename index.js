@@ -234,5 +234,12 @@ bot.on('callback_query', (ctx) => {
 
 switch(NODE_ENV) {
   case 'development': bot.launch(); break;
-  case 'production': module.exports = bot; break;
+  case 'production': module.exports = {
+    bot,
+    options: {
+      telegram: {
+        apiRoot: 'https://telegram-tg-api.herokuapp.com'
+      }
+    }
+  }; break;
 }
