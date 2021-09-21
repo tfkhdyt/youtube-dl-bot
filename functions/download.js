@@ -4,6 +4,11 @@ const fs = require('fs');
 const getMetadata = require('./getMetadata');
 
 module.exports = (url, formatCode, ctx) => {
+  console.log('Downloading...');
+  ctx.replyWithMarkdown('_⬇️ Sedang mengunduh..._')
+  .then(m => {
+    textLoad = m.message_id;
+  });
   youtubedl(url, {
     format: `${formatCode}+140`,
     mergeOutputFormat: 'mp4',

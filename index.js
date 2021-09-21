@@ -52,12 +52,6 @@ bot.on('text', (ctx) => {
 bot.on('callback_query', (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
   const formatCode = ctx.callbackQuery.data;
- 
-  console.log('Downloading...');
-  ctx.replyWithMarkdown('_⬇️ Sedang mengunduh..._')
-  .then(m => {
-    textLoad = m.message_id;
-  });
   
   download(url, formatCode, ctx);
 });
