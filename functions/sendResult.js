@@ -5,7 +5,10 @@ const secondsToTimestamp = require('./secondsToTimestamp');
 const convertToICS = require('./convertToICS');
 const showQuality = require('./showQuality');
 
-module.exports = async (url, ctx, messageId) => {
+let display_id;
+let judul;
+
+const sendResult = async (url, ctx, messageId) => {
   const data = await getMetadata(url, ctx);
   const formats = getFormats(data.formats);
 
@@ -33,3 +36,5 @@ module.exports = async (url, ctx, messageId) => {
   });
   ctx.reply(`🎥 Pilih kualitas: `, showQuality(formats));
 };
+
+module.exports = { sendResult, display_id, judul };

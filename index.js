@@ -7,7 +7,8 @@ const fs = require('fs');
 require('dotenv').config();
 
 // import function
-const sendResult = require('./functions/sendResult');
+const { sendResult, display_id, judul } = require('./functions/sendResult');
+const getMetadata = require('./functions/getMetadata');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -15,7 +16,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const API_ROOT = process.env.API_ROOT;
 
 // deklarasi global variables
-let url, loadText, audioFileSize, display_id, judul;
+let url, audioFileSize;
 
 // Atur mode
 switch (NODE_ENV) {
@@ -39,6 +40,7 @@ bot.command('help', (ctx) => ctx.reply(`Anda hanya perlu mengirimkan link dari v
 bot.on('text', (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
+  console.log('Searching');
   ctx.replyWithMarkdown('_🔎 Sedang mencari..._', { reply_to_message_id : messageId })
   .then(m => {
     textLoad = m.message_id;
@@ -62,7 +64,7 @@ bot.on('callback_query', (ctx) => {
     output: `%(id)s-${formatCode}`,
     ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg"
   })
-  .then(data => {
+  .then(async (data) => {
     console.log(data);
     ctx.deleteMessage(textLoad);
     console.log('Uploading...');
@@ -70,14 +72,15 @@ bot.on('callback_query', (ctx) => {
     .then(m => {
       textLoad = m.message_id;
     });
-    // const newExt = path.extname(glob.sync(`*${display_id}-${formatCode}.*`)[0]).substring(1);
-    // const fileToUpload = glob.sync(`*-${display_id}-${formatCode}.m*`)[0];
-    const fileToUpload = `${display_id}-${formatCode}.mp4`;
+    
+    const metadata = await getMetadata(url, ctx);
+    const id = metadata.display_id;
+    const judul = metadata.title;
+
+    const fileToUpload = `${id}-${formatCode}.mp4`;
     // console.log(fileToUpload);
     fs.readdir('./', (err, files) => {
       if (err) throw err;
-      // files object contains all files names
-      // log them on console
       files.forEach(file => {
         console.log(file);
       });
