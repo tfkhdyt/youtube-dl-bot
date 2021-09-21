@@ -18,11 +18,7 @@ switch (NODE_ENV) {
   case 'development': bot = new Telegraf(BOT_TOKEN); break;
   // case 'production': bot = new Composer(); break;
   case 'production': 
-    bot = new Telegraf(BOT_TOKEN, {
-      telegram: {
-        apiRoot: BOT_DOMAIN
-      }
-    });
+    bot = new Telegraf(BOT_TOKEN);
     break;
 } 
 
@@ -241,5 +237,13 @@ bot.on('callback_query', (ctx) => {
 switch (NODE_ENV) {
   case 'development': bot.launch(); break;
   // case 'production': module.exports = bot; break;
-  case 'production': bot.launch; break;
+  case 'production':
+    bot.telegram.setWebhook(BOT_DOMAIN, { max_connections:999 })
+    bot.launch({
+      webhook: {
+        hookPath: '/',
+        port: process.env.PORT
+      }
+     }); 
+     break;
 }
