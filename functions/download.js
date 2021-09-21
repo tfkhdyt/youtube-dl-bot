@@ -15,12 +15,12 @@ module.exports = (url, formatCode, ctx) => {
   })
   .then((data) => {
     console.log(data);
-    ctx.deleteMessage(textLoad);
     return youtubedl(url, {
       dumpSingleJson: true,
       simulate: true
     })
     .then(data => {
+      ctx.deleteMessage(textLoad);
       return {
         id: data.display_id,
         judul: data.title
