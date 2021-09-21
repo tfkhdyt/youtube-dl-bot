@@ -1,13 +1,13 @@
 const youtubedl = require('youtube-dl-exec');
 const getMetadata = require('./getMetadata');
 
-module.exports = (url, formatCode, ctx) => {
+module.exports = async (url, formatCode, ctx) => {
   console.log('Downloading...');
   ctx.replyWithMarkdown('_⬇️ Sedang mengunduh..._')
   .then(m => {
     textLoad = m.message_id;
   });
-  return youtubedl(url, {
+  youtubedl(url, {
     format: `${formatCode}+140`,
     mergeOutputFormat: 'mp4',
     output: `%(id)s-${formatCode}`,
@@ -15,16 +15,24 @@ module.exports = (url, formatCode, ctx) => {
   })
   .then((data) => {
     console.log(data);
-    return youtubedl(url, {
-      dumpSingleJson: true,
-      simulate: true
-    })
-    .then(data => {
-      ctx.deleteMessage(textLoad);
-      return {
-        id: data.display_id,
-        judul: data.title
-      };
-    });
   });
+  const id = await youtubedl(url, {
+    getId: true,
+    noWarnings: true,
+    noCallHome: true,
+    noCheckCertificate: true
+  })
+  .then(data => data);
+  const judul = await youtubedl(url, {
+    getTitle: true,
+    noWarnings: true,
+    noCallHome: true,
+    noCheckCertificate: true
+  })
+  .then(data => data);
+  
+  console.log(`id: ${id}
+judul: ${judul}`);
+  ctx.deleteMessage(textLoad);
+  return { id, judul };
 };
