@@ -1,1 +1,1 @@
-web: node index.js
+web: micro-bot -d $BOT_DOMAIN -p $PORT

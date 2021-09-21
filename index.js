@@ -2,7 +2,6 @@ const youtubedl = require('youtube-dl-exec');
 const { Telegraf, Markup } = require('telegraf');
 const { Composer } = require('micro-bot');
 const { Keyboard, Key } = require('telegram-keyboard');
-const express = require('express');
 const fs = require('fs');
 // const path = require('path');
 const glob = require('glob');
@@ -18,10 +17,7 @@ let loadText;
 // Atur mode
 switch (NODE_ENV) {
   case 'development': bot = new Telegraf(BOT_TOKEN); break;
-  // case 'production': bot = new Composer(); break;
-  case 'production': 
-    bot = new Telegraf(BOT_TOKEN);
-    break;
+  case 'production': bot = new Composer(); break;
 } 
 
 // functions
@@ -236,18 +232,7 @@ bot.on('callback_query', (ctx) => {
   });
 });
 
-const secretPath = `telegraf/${bot.secretPathComponent()}`;
-
-// Set telegram webhook
-// npm install -g localtunnel && lt --port 3000
-bot.telegram.setWebhook(`${BOT_DOMAIN}${secretPath}`);
-
-const app = express();
-app.get('/', (req, res) => res.send('Hello World!'));
-// Set the bot API endpoint
-app.use(bot.webhookCallback(secretPath));
-app.listen(PORT, () => {
-  console.log(`YTDL listening on port ${PORT}!`)
-})
-
-// No need to call bot.launch()
+switch(NODE_ENV) {
+  case 'development': bot.launch(); break;
+  case 'production': module.exports = bot; break;
+}
