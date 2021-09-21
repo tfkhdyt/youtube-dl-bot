@@ -35,6 +35,8 @@ module.exports = async (url, ctx, messageId) => {
   ctx.deleteMessage(textLoad);
   ctx.replyWithMarkdown(metadata, {
     reply_to_message_id: messageId
+  })
+  .then(() => {
+    ctx.reply(`🎥 Pilih kualitas: `, showQuality(formats));
   });
-  ctx.reply(`🎥 Pilih kualitas: `, showQuality(formats));
 };
