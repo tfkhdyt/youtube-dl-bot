@@ -8,6 +8,7 @@ require('dotenv').config();
 const sendResult = require('./functions/sendResult');
 const download = require('./functions/download');
 const upload = require('./functions/upload');
+const clearCache = require('./functions/clearCache');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -49,7 +50,8 @@ bot.on('callback_query', async (ctx) => {
   const formatCode = ctx.callbackQuery.data;
   
   const { id, judul } = await download(url, formatCode, ctx);
-  upload(id, judul, formatCode, ctx);
+  const path = await upload(id, judul, formatCode, ctx);
+  clearCache(path, url);
 });
 
 switch(NODE_ENV) {

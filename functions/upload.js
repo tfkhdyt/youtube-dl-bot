@@ -17,7 +17,7 @@ module.exports = (id, judul, formatCode, ctx) => {
       console.log(file);
     });
   });
-  ctx.replyWithVideo(
+  return ctx.replyWithVideo(
     {
       source: fileToUpload,
       filename: judul + '.mp4'
@@ -33,19 +33,6 @@ module.exports = (id, judul, formatCode, ctx) => {
     })
   .then(() => {
     ctx.deleteMessage(textLoad);
-    const path = './' + fileToUpload;
-    fs.unlink(path, (err) => {
-      if (err) throw err;
-      console.log("File removed:", path);
-    });
-    youtubedl(url,
-      {
-        rmCacheDir: true,
-        simulate: true,
-        noWarnings: true,
-        noCallHome: true,
-        noCheckCertificate: true,
-      })
-    .then(res => console.log(res));
+    return './' + fileToUpload;
   });
 };
