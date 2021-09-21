@@ -1,4 +1,4 @@
-const monthNumberToString = require('./functions/monthNumberToString');
+const monthNumberToString = require('./monthNumberToString');
 
 module.exports = string => {
   const date = string.substring(6, 8);
