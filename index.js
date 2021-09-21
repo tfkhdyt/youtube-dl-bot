@@ -8,7 +8,6 @@ const fs = require('fs');
 require('dotenv').config();
 
 // inport functions
-const monthNumberToString = require('./functions/monthNumberToString');
 const dateFormatter = require('./functions/dateFormatter');
 const secondsToTimestamp = require('./functions/secondsToTimestamp');
 const formatNumber = require('./functions/formatNumber');
