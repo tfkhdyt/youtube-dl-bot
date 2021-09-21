@@ -19,7 +19,11 @@ let url, loadText, audioFileSize, display_id, judul;
 
 // Atur mode
 switch (NODE_ENV) {
-  case 'development': bot = new Telegraf(BOT_TOKEN); break;
+  case 'development': bot = new Telegraf(BOT_TOKEN, {
+    telegram: {
+      apiRoot: API_ROOT
+    }
+  }); break;
   case 'production': bot = new Composer(); break;
 } 
 
@@ -125,5 +129,5 @@ switch(NODE_ENV) {
   }; break;
 }
 
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
