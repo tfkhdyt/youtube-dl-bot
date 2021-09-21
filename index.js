@@ -15,6 +15,7 @@ const formatNumber = require('./functions/formatNumber');
 const convertToICS = require('./functions/convertToICS');
 const getMetadata = require('./functions/getMetadata');
 const formatBytes = require('./functions/formatBytes');
+const getFormats = require('./functions/getFormats');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -22,7 +23,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const API_ROOT = process.env.API_ROOT;
 
 // deklarasi global variables
-let url, loadText;
+let url, loadText, audioFileSize;
 
 // Atur mode
 switch (NODE_ENV) {
@@ -31,13 +32,6 @@ switch (NODE_ENV) {
 } 
 
 // functions
-
-let audioFileSize;
-const getFormats = formats => {
-  const audio = formats.find(format => format.format_id == '140');
-  audioFileSize = audio.filesize;
-  return formats.filter(format => format.fps != null && format.acodec == 'none');
-};
 
 const showQuality = formats => {
   const keyCallback = formats.map((format) => {
