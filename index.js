@@ -13,6 +13,7 @@ const dateFormatter = require('./functions/dateFormatter');
 const secondsToTimestamp = require('./functions/secondsToTimestamp');
 const formatNumber = require('./functions/formatNumber');
 const convertToICS = require('./functions/convertToICS');
+const getMetadata = require('./functions/getMetadata');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -29,22 +30,6 @@ switch (NODE_ENV) {
 } 
 
 // functions
-
-const getMetadata = (link, ctx) => {
-  return youtubedl(link, {
-    dumpSingleJson: true,
-    noWarnings: true,
-    noCallHome: true,
-    noCheckCertificate: true,
-    preferFreeFormats: true,
-    youtubeSkipDashManifest: true
-  })
-  .then(data => data)
-  .catch(err => {
-    ctx.deleteMessage(textLoad);
-    return ctx.reply('Video tidak ditemukan, pastikan link video tersebut sudah benar! 🙏🏼');
-  });
-};
 
 const formatBytes = (bytes, decimals = 2) => {
   if (bytes === 0) return '0 Bytes';
