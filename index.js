@@ -16,6 +16,7 @@ const convertToICS = require('./functions/convertToICS');
 const getMetadata = require('./functions/getMetadata');
 const formatBytes = require('./functions/formatBytes');
 const getFormats = require('./functions/getFormats');
+const showQuality = require('./functions/showQuality');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -23,30 +24,13 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const API_ROOT = process.env.API_ROOT;
 
 // deklarasi global variables
-let url, loadText, audioFileSize;
+let url, loadText, audioFileSize, display_id, judul;
 
 // Atur mode
 switch (NODE_ENV) {
   case 'development': bot = new Telegraf(BOT_TOKEN); break;
   case 'production': bot = new Composer(); break;
 } 
-
-// functions
-
-const showQuality = formats => {
-  const keyCallback = formats.map((format) => {
-    const id = format.format_id;
-    const quality = format.format_note;
-    const fps = format.fps;
-    const vcodec = format.vcodec.substring(0, 4).toUpperCase();
-    const fileSize = formatBytes(format.filesize + audioFileSize);
-    return Key.callback(`${quality} | ${vcodec} | ${fileSize}`, id);
-  });
-  
-  return Keyboard.make(keyCallback, {
-    columns: 2
-  }).inline();
-};
 
 // command start
 bot.start((ctx) => ctx.replyWithMarkdown(`Halo ${ctx.from.first_name}, selamat datang di YT-DL Bot, kirim link video yang ingin anda unduh untuk mengunduh video tersebut.
@@ -57,7 +41,6 @@ bot.start((ctx) => ctx.replyWithMarkdown(`Halo ${ctx.from.first_name}, selamat d
 bot.command('help', (ctx) => ctx.reply(`Anda hanya perlu mengirimkan link dari video yang ingin diunduh`));
 
 // command utama
-let display_id, judul;
 bot.on('text', async (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
