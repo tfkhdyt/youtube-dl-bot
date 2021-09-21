@@ -236,7 +236,7 @@ bot.on('callback_query', (ctx) => {
   });
 });
 
-const secretPath = `/telegraf/${bot.secretPathComponent()}`;
+const secretPath = `telegraf/${bot.secretPathComponent()}`;
 
 // Set telegram webhook
 // npm install -g localtunnel && lt --port 3000
