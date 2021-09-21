@@ -49,8 +49,6 @@ bot.on('text', async (ctx) => {
     textLoad = m.message_id;
   });
   
-  // console.log(textLoad);
-  
   const data = await getMetadata(url, ctx);
   const formats = getFormats(data.formats);
   
