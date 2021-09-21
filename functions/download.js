@@ -11,14 +11,20 @@ module.exports = (url, formatCode, ctx) => {
     format: `${formatCode}+140`,
     mergeOutputFormat: 'mp4',
     output: `%(id)s-${formatCode}`,
-    ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg",
-    dumpSingleJson: true
+    ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg"
   })
   .then((data) => {
+    console.log(data);
     ctx.deleteMessage(textLoad);
-    return {
-      id: data.display_id,
-      judul: data.title
-    };
+    return youtubedl(url, {
+      dumpSingleJson: true,
+      simulate: true
+    })
+    .then(data => {
+      return {
+        id: data.display_id,
+        judul: data.title
+      };
+    });
   });
 };
