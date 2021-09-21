@@ -1,14 +1,12 @@
 // import module
-const { Telegraf, Markup } = require('telegraf');
+const { Telegraf } = require('telegraf');
 const { Composer } = require('micro-bot');
-const youtubedl = require('youtube-dl-exec');
 const glob = require('glob');
-const fs = require('fs');
 require('dotenv').config();
 
 // import function
-const { sendResult, display_id, judul } = require('./functions/sendResult');
-const getMetadata = require('./functions/getMetadata');
+const sendResult = require('./functions/sendResult');
+const download = require('./functions/download');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -40,11 +38,13 @@ bot.command('help', (ctx) => ctx.reply(`Anda hanya perlu mengirimkan link dari v
 bot.on('text', (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
+  
   console.log('Searching');
   ctx.replyWithMarkdown('_🔎 Sedang mencari..._', { reply_to_message_id : messageId })
   .then(m => {
     textLoad = m.message_id;
   });
+  
   sendResult(url, ctx, messageId);
 });
 
@@ -58,66 +58,8 @@ bot.on('callback_query', (ctx) => {
   .then(m => {
     textLoad = m.message_id;
   });
-  youtubedl(url, {
-    format: `${formatCode}+140`,
-    mergeOutputFormat: 'mp4',
-    output: `%(id)s-${formatCode}`,
-    ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg"
-  })
-  .then(async (data) => {
-    console.log(data);
-    ctx.deleteMessage(textLoad);
-    console.log('Uploading...');
-    ctx.replyWithMarkdown('_⬆️ Sedang mengunggah..._')
-    .then(m => {
-      textLoad = m.message_id;
-    });
-    
-    const metadata = await getMetadata(url, ctx);
-    const id = metadata.display_id;
-    const judul = metadata.title;
-
-    const fileToUpload = `${id}-${formatCode}.mp4`;
-    // console.log(fileToUpload);
-    fs.readdir('./', (err, files) => {
-      if (err) throw err;
-      files.forEach(file => {
-        console.log(file);
-      });
-    });
-    ctx.replyWithVideo(
-      { 
-        source: fileToUpload,
-        filename: judul + '.mp4'
-      },
-      {
-        ...Markup.inlineKeyboard([[
-          Markup.button.url('💵 Donasi', 'https://donate.tfkhdyt.my.id/'),
-          Markup.button.url('💻 Source Code', 'https://github.com/tfkhdyt/youtube-dl-bot/')
-        ],[
-          Markup.button.url('💠 Project saya yang lainnya', 'https://tfkhdyt.my.id/#portfolio')
-        ]
-      ]) 
-    })
-    .then(() => {
-      ctx.deleteMessage(textLoad);
-      const path = './' + fileToUpload;
-      fs.unlink(path, (err) => {
-        if (err) throw err;
-        console.log("File removed:", path);
-      });
-      youtubedl(url, { 
-        rmCacheDir: true,
-        simulate: true,
-        noWarnings: true,
-        noCallHome: true,
-        noCheckCertificate: true,
-        preferFreeFormats: true,
-        youtubeSkipDashManifest: true
-      })
-      .then(res => console.log(res));
-    });
-  });
+  
+  download(url, formatCode, ctx);
 });
 
 switch(NODE_ENV) {

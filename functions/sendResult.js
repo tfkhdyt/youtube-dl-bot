@@ -5,15 +5,10 @@ const secondsToTimestamp = require('./secondsToTimestamp');
 const convertToICS = require('./convertToICS');
 const showQuality = require('./showQuality');
 
-let display_id;
-let judul;
-
-const sendResult = async (url, ctx, messageId) => {
+module.exports = async (url, ctx, messageId) => {
   const data = await getMetadata(url, ctx);
   const formats = getFormats(data.formats);
 
-  display_id = data.display_id;
-  judul = data.title;
   const tanggal = dateFormatter(data.upload_date);
   const channel = data.channel;
   const durasi = secondsToTimestamp(data.duration);
@@ -36,5 +31,3 @@ const sendResult = async (url, ctx, messageId) => {
   });
   ctx.reply(`🎥 Pilih kualitas: `, showQuality(formats));
 };
-
-module.exports = { sendResult, display_id, judul };
