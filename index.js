@@ -9,6 +9,7 @@ require('dotenv').config();
 
 // inport functions
 const monthNumberToString = require('./functions/monthNumberToString');
+const dateFormatter = require('./functions/dateFormatter');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -25,12 +26,7 @@ switch (NODE_ENV) {
 } 
 
 // functions
-const dateFormatter = string => {
-  const date = string.substring(6, 8);
-  const month = string.substring(4, 6);
-  const year = string.substring(0, 4);
-  return `${date} ${monthNumberToString(month)} ${year}`;
-};
+
 
 const secondsToTimestamp = seconds => {
   return new Date(seconds * 1000).toISOString().substr(11, 8);
