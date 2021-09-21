@@ -1,18 +1,22 @@
-const youtubedl = require('youtube-dl-exec');
+// import module
 const { Telegraf, Markup } = require('telegraf');
 const { Composer } = require('micro-bot');
 const { Keyboard, Key } = require('telegram-keyboard');
+const youtubedl = require('youtube-dl-exec');
 const fs = require('fs');
 const glob = require('glob');
 require('dotenv').config();
 
+// inport functions
+const monthNumberToString = require('./functions/monthNumberToString');
+
+// deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const BOT_DOMAIN = process.env.BOT_DOMAIN;
 const API_ROOT = process.env.API_ROOT;
 
-let url;
-let loadText;
+// deklarasi global variables
+let url, loadText;
 
 // Atur mode
 switch (NODE_ENV) {
@@ -21,23 +25,6 @@ switch (NODE_ENV) {
 } 
 
 // functions
-const monthNumberToString = month => {
-  switch(month){
-    case '01': return 'Januari';
-    case '02': return 'Februari'; 
-    case '03': return 'Maret';
-    case '04': return 'April';
-    case '05': return 'Mei';
-    case '06': return 'Juni';
-    case '07': return 'Juli';
-    case '08': return 'Agustus';
-    case '09': return 'September';
-    case '10': return 'Oktober';
-    case '11': return 'November';
-    case '12': return 'Desember';
-  }
-};
-
 const dateFormatter = string => {
   const date = string.substring(6, 8);
   const month = string.substring(4, 6);
