@@ -243,7 +243,7 @@ switch(NODE_ENV) {
     },
     options: {
       telegram: {
-        apiRoot: 'https://tfkhdyt-tg-api.herokuapp.com'
+        apiRoot: API_ROOT
       }
     }
   }; break;
