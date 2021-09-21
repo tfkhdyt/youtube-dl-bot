@@ -3,14 +3,14 @@ const youtubedl = require('youtube-dl-exec');
 const fs = require('fs');
 const clearCache = require('./clearCache');
 
-module.exports = (info, formatCode, ctx, url) => {
+module.exports = (id, judul, formatCode, ctx, url) => {
   console.log('Uploading...');
   ctx.replyWithMarkdown('_⬆️ Sedang mengunggah..._')
   .then(m => {
     textLoad = m.message_id;
   });
     
-  const fileToUpload = `${info.id}-${formatCode}.mp4`;
+  const fileToUpload = `${id}-${formatCode}.mp4`;
   console.log(fileToUpload);
   fs.readdir('./', (err, files) => {
     if (err) throw err;
@@ -21,7 +21,7 @@ module.exports = (info, formatCode, ctx, url) => {
   return ctx.replyWithVideo(
     {
       source: fileToUpload,
-      filename: info.judul + '.mp4'
+      filename: judul + '.mp4'
     },
     {
       ...Markup.inlineKeyboard([[

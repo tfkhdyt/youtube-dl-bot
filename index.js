@@ -14,7 +14,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const API_ROOT = process.env.API_ROOT;
 
 // deklarasi global variables
-let url, data;
+let url, id, judul;
 
 // Atur mode
 switch (NODE_ENV) {
@@ -40,10 +40,8 @@ bot.on('text', async (ctx) => {
   const messageId = ctx.update.message.message_id;
   
   const { tempId, tempJudul } = await sendResult(url, ctx, messageId);
-  data = {
-    id: tempId,
-    judul: tempJudul
-  };
+  id = tempId;
+  judul = tempJudul;
 });
 
 // callback
@@ -51,7 +49,7 @@ bot.on('callback_query', async (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
   const formatCode = ctx.callbackQuery.data;
   
-  await download(url, formatCode, ctx, data);
+  await download(url, formatCode, ctx, id, judul);
 });
 
 switch(NODE_ENV) {
