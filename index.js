@@ -6,15 +6,6 @@ const glob = require('glob');
 const fs = require('fs');
 require('dotenv').config();
 
-// inport functions
-const dateFormatter = require('./functions/dateFormatter');
-const secondsToTimestamp = require('./functions/secondsToTimestamp');
-const formatNumber = require('./functions/formatNumber');
-const convertToICS = require('./functions/convertToICS');
-const getMetadata = require('./functions/getMetadata');
-const getFormats = require('./functions/getFormats');
-const showQuality = require('./functions/showQuality');
-
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
 const BOT_TOKEN = process.env.BOT_TOKEN;
@@ -38,7 +29,7 @@ bot.start((ctx) => ctx.replyWithMarkdown(`Halo ${ctx.from.first_name}, selamat d
 bot.command('help', (ctx) => ctx.reply(`Anda hanya perlu mengirimkan link dari video yang ingin diunduh`));
 
 // command utama
-bot.on('text', async (ctx) => {
+bot.on('text', (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
   ctx.replyWithMarkdown('_🔎 Sedang mencari..._', {reply_to_message_id : messageId})
@@ -46,33 +37,6 @@ bot.on('text', async (ctx) => {
     textLoad = m.message_id;
   });
   
-  const data = await getMetadata(url, ctx);
-  const formats = getFormats(data.formats);
-  
-  display_id = data.display_id;
-  judul = data.title;
-  const tanggal = dateFormatter(data.upload_date);
-  const channel = data.channel;
-  const durasi = secondsToTimestamp(data.duration);
-  const jmlPenonton = convertToICS(data.view_count);
-  const jmlLike = convertToICS(data.like_count);
-  const jmlDislike = convertToICS(data.dislike_count);
-  const persenLike = (data.like_count / (data.like_count + data.dislike_count) * 100).toFixed(1) + '%';
-  const persenDislike = (data.dislike_count / (data.like_count + data.dislike_count) * 100).toFixed(1) + '%';
-  
-  const metadata = `📄 *Judul*: \`${judul}\`
-👨🏻 *Channel*: \`${channel}\`
-📆 *Tanggal di-upload*: \`${tanggal}\`
-🕖 *Durasi*: \`${durasi}\`
-👀 *Jumlah penonton*: \`${jmlPenonton}\`
-👍🏼 *Jumlah like*: \`${jmlLike} (${persenLike})\`
-👎🏼 *Jumlah dislike*: \`${jmlDislike} (${persenDislike})\``;
-
-  ctx.deleteMessage(textLoad);
-  ctx.replyWithMarkdown(metadata, {
-    reply_to_message_id: messageId
-  });
-  ctx.reply(`🎥 Pilih kualitas: `, showQuality(formats));
 });
 
 // callback
