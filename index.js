@@ -9,13 +9,21 @@ require('dotenv').config();
 
 const NODE_ENV = process.env.NODE_ENV;
 const BOT_TOKEN = process.env.BOT_TOKEN;
+const BOT_DOMAIN = process.env.BOT_DOMAIN;
 let url;
 let loadText;
 
 // Atur mode
 switch (NODE_ENV) {
   case 'development': bot = new Telegraf(BOT_TOKEN); break;
-  case 'production': bot = new Composer(); break;
+  // case 'production': bot = new Composer(); break;
+  case 'production': 
+    bot = new Telegraf(BOT_TOKEN, {
+      telegram: {
+        apiRoot: BOT_DOMAIN
+      }
+    });
+    break;
 } 
 
 // functions
@@ -232,5 +240,6 @@ bot.on('callback_query', (ctx) => {
 
 switch (NODE_ENV) {
   case 'development': bot.launch(); break;
-  case 'production': module.exports = bot; break;
+  // case 'production': module.exports = bot; break;
+  case 'production': bot.launch; break;
 }
