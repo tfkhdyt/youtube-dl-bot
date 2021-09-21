@@ -1,3 +1,5 @@
+const youtubedl = require('youtube-dl-exec');
+
 module.exports = (link, ctx) => {
   return youtubedl(link, {
     dumpSingleJson: true,
