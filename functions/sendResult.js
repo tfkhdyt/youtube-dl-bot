@@ -26,11 +26,11 @@ module.exports = async (url, ctx, messageId) => {
   const persenDislike = (data.dislike_count / (data.like_count + data.dislike_count) * 100).toFixed(1) + '%';
   const metadata = `📄 *Judul*: \`${judul}\`
 👨🏻 *Channel*: \`${channel}\`
-📆 *Tanggal di-upload*: \`${tanggal}\`
+📆 *Tanggal*: \`${tanggal}\`
 🕖 *Durasi*: \`${durasi}\`
-👀 *Jumlah penonton*: \`${jmlPenonton}\`
-👍🏼 *Jumlah like*: \`${jmlLike} (${persenLike})\`
-👎🏼 *Jumlah dislike*: \`${jmlDislike} (${persenDislike})\``;
+👀 *Penayangan*: \`${jmlPenonton}\`
+👍🏼 *Like*: \`${jmlLike} (${persenLike})\`
+👎🏼 *Dislike*: \`${jmlDislike} (${persenDislike})\``;
 
   ctx.deleteMessage(textLoad);
   ctx.replyWithMarkdown(metadata, {
