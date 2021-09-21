@@ -12,6 +12,7 @@ const monthNumberToString = require('./functions/monthNumberToString');
 const dateFormatter = require('./functions/dateFormatter');
 const secondsToTimestamp = require('./functions/secondsToTimestamp');
 const formatNumber = require('./functions/formatNumber');
+const convertToICS = require('./functions/convertToICS');
 
 // deklarasi & inisialisasi env variables
 const NODE_ENV = process.env.NODE_ENV;
@@ -28,17 +29,6 @@ switch (NODE_ENV) {
 } 
 
 // functions
-
-
-const convertToICS = (labelValue) => {
-  // Nine Zeroes for Billions
-  return Math.abs(Number(labelValue)) >= 1.0e+9 ? (Math.abs(Number(labelValue)) / 1.0e+9).toFixed(1) + " miliar"
-  // Six Zeroes for Millions 
-  : Math.abs(Number(labelValue)) >= 1.0e+6 ? (Math.abs(Number(labelValue)) / 1.0e+6).toFixed(1) + " juta"
-  // Three Zeroes for Thousands
-  : Math.abs(Number(labelValue)) >= 1.0e+3 ? (Math.abs(Number(labelValue)) / 1.0e+3).toFixed(1) + " ribu"
-  : Math.abs(Number(labelValue));
-};
 
 const getMetadata = (link, ctx) => {
   return youtubedl(link, {
