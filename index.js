@@ -2,6 +2,7 @@ const youtubedl = require('youtube-dl-exec');
 const { Telegraf, Markup } = require('telegraf');
 const { Composer } = require('micro-bot');
 const { Keyboard, Key } = require('telegram-keyboard');
+const express = require('express');
 const fs = require('fs');
 // const path = require('path');
 const glob = require('glob');
@@ -10,6 +11,7 @@ require('dotenv').config();
 const NODE_ENV = process.env.NODE_ENV;
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const BOT_DOMAIN = process.env.BOT_DOMAIN;
+const PORT = process.env.PORT || 3000;
 let url;
 let loadText;
 
@@ -234,22 +236,18 @@ bot.on('callback_query', (ctx) => {
   });
 });
 
-switch (NODE_ENV) {
-  case 'development':
-    bot.launch({
-      webhook: {
-        domain: BOT_DOMAIN + '/bot' + BOT_TOKEN,
-        port: Number(process.env.PORT) || 3000
-      }
-    });
-    break;
-  // case 'production': module.exports = bot; break;
-  case 'production':
-    bot.launch({
-      webhook: {
-        domain: BOT_DOMAIN,
-        port: Number(process.env.PORT) || 3000
-      }
-    });
-    break;
-}
+const secretPath = `/telegraf/${bot.secretPathComponent()}`;
+
+// Set telegram webhook
+// npm install -g localtunnel && lt --port 3000
+bot.telegram.setWebhook(`${BOT_DOMAIN}${secretPath}`);
+
+const app = express();
+app.get('/', (req, res) => res.send('Hello World!'));
+// Set the bot API endpoint
+app.use(bot.webhookCallback(secretPath));
+app.listen(PORT, () => {
+  console.log(`YTDL listening on port ${PORT}!`)
+})
+
+// No need to call bot.launch()
