@@ -1,7 +1,6 @@
 // import module
 const { Telegraf, Markup } = require('telegraf');
 const { Composer } = require('micro-bot');
-const { Keyboard, Key } = require('telegram-keyboard');
 const youtubedl = require('youtube-dl-exec');
 const glob = require('glob');
 const fs = require('fs');

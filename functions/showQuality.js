@@ -1,3 +1,4 @@
+const { Keyboard, Key } = require('telegram-keyboard');
 const formatBytes = require('./functions/formatBytes');
 
 module.exports = formats => {
