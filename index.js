@@ -47,11 +47,12 @@ bot.on('text', async (ctx) => {
 });
 
 // callback
-bot.on('callback_query', async (ctx) => {
+bot.on('callback_query', (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
   const formatCode = ctx.callbackQuery.data;
   const localData = data;
-  await download(url, formatCode, ctx, localData);
+  console.log('Local data:', localData);
+  download(url, formatCode, ctx, localData);
 });
 
 switch(NODE_ENV) {
