@@ -9,6 +9,7 @@ module.exports = (link, ctx) => {
   })
   .then(data => data)
   .catch(err => {
+    console.log(err);
     ctx.deleteMessage(textLoad);
     return ctx.reply('Video tidak ditemukan, pastikan link video tersebut sudah benar! 🙏🏼');
   });
