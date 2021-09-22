@@ -11,8 +11,7 @@ module.exports = (url, formatCode, ctx, info) => {
   youtubedl(url, {
     format: `${formatCode}+140`,
     mergeOutputFormat: 'mp4',
-    ignoreErrors: true,
-    "continue": true,
+    continue: true,
     output: `%(id)s-${formatCode}`,
     ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg"
   })
