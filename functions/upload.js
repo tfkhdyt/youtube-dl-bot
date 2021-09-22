@@ -36,5 +36,8 @@ module.exports = (info, formatCode, ctx, url) => {
     ctx.deleteMessage(textLoad);
     const path =  './' + fileToUpload;
     clearCache(path, url);
+  })
+  .catch(err => {
+    console.log('Error yang terjadi saat upload:', err);
   });
 };
