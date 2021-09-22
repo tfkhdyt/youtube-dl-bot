@@ -21,22 +21,5 @@ module.exports = (url, formatCode, ctx, info) => {
     ctx.deleteMessage(textLoad);
     console.log('Download:', data);
     upload(info, formatCode, ctx, url);
-  })
-  .catch(err => {
-    youtubedl(url, {
-      format: `${formatCode}+140`,
-      mergeOutputFormat: 'mp4',
-      continue: true,
-      geoBypassCountry: 'ID',
-      // proxy: 'https://36.94.183.153:8080',
-      output: `%(id)s-${formatCode}`,
-      ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg",
-      rmCacheDir: true
-    })
-    .then((data) => {
-      ctx.deleteMessage(textLoad);
-      console.log('Download:', data);
-      upload(info, formatCode, ctx, url);
-    });
   });
 };

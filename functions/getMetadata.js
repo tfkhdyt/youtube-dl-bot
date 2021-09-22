@@ -10,17 +10,7 @@ module.exports = (link, ctx) => {
   .then(data => data)
   .catch(err => {
     console.log('Error yang terjadi:', err);
-    return youtubedl(link, {
-      dumpSingleJson: true,
-      proxy: 'https://36.94.183.153:8080',
-      preferFreeFormats: true,
-      youtubeSkipDashManifest: true
-    })
-    .then(data => data)
-    .catch(err => {
-      console.log('Error yang terjadi:', err);
-      ctx.deleteMessage(textLoad);
-      return ctx.reply('Video tidak ditemukan, pastikan link video tersebut sudah benar! 🙏🏼');
-    });
+    ctx.deleteMessage(textLoad);
+    return ctx.reply('Video tidak ditemukan, pastikan link video tersebut sudah benar! 🙏🏼');
   });
 };
