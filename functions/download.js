@@ -15,6 +15,7 @@ module.exports = (url, formatCode, ctx, info) => {
     ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg"
   })
   .then((data) => {
+    ctx.deleteMessage(textLoad);
     console.log('Download:', data);
     upload(info, formatCode, ctx, url);
   });
