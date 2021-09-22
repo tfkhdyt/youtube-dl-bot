@@ -21,5 +21,9 @@ module.exports = (url, formatCode, ctx, info) => {
     ctx.deleteMessage(textLoad);
     console.log('Download:', data);
     upload(info, formatCode, ctx, url);
+  })
+  .catch(err => {
+    ctx.deleteMessage(textLoad);
+    console.log('Error yang terjadi saat download:', err);
   });
 };
