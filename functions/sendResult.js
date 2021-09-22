@@ -40,6 +40,6 @@ module.exports = async (url, ctx, messageId) => {
     ctx.deleteMessage(textLoad);
     ctx.reply(`🎥 Pilih kualitas: `, showQuality(formats));
   });
-  console.log(id, judul)
+  console.log(id, judul);
   return { id, judul };
 };
