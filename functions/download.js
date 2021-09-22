@@ -27,7 +27,8 @@ module.exports = (url, formatCode, ctx, info) => {
       format: `${formatCode}+140`,
       mergeOutputFormat: 'mp4',
       continue: true,
-      proxy: 'https://36.94.183.153:8080',
+      geoBypassCountry: 'ID',
+      // proxy: 'https://36.94.183.153:8080',
       output: `%(id)s-${formatCode}`,
       ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg",
       rmCacheDir: true
