@@ -1,4 +1,3 @@
-const youtubedl = require('youtube-dl-exec');
 const fs = require('fs');
 
 module.exports = (path, url) => {
@@ -7,13 +6,4 @@ module.exports = (path, url) => {
     if (err) throw err;
     console.log("File removed:", path);
   });
-  youtubedl(url,
-    {
-      rmCacheDir: true,
-      skipDownload: true,
-      noWarnings: true,
-      noCallHome: true,
-      noCheckCertificate: true,
-    })
-  .then(res => console.log(res));
 };

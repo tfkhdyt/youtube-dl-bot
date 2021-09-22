@@ -3,7 +3,7 @@ const youtubedl = require('youtube-dl-exec');
 module.exports = (link, ctx) => {
   return youtubedl(link, {
     dumpSingleJson: true,
-    geoBypassCountry: 'ID',
+    proxy: 'https://114.199.80.100:8182',
     preferFreeFormats: true,
     youtubeSkipDashManifest: true
   })
