@@ -40,11 +40,12 @@ bot.on('text', async (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
   
-  const { tempId, tempJudul } = await sendResult(url, ctx, messageId);
+  const { id: tempId, judul: tempJudul } = await sendResult(url, ctx, messageId);
   data = {
     id: tempId,
     judul: tempJudul
   };
+  console.log(data);
 });
 
 // callback
