@@ -32,7 +32,7 @@ bot.start((ctx) => ctx.replyWithMarkdown(`Halo ${ctx.from.first_name}, selamat d
 
 *PERHATIAN*: 
 - Dikarenakan storage hosting yang terbatas, maka kalian tidak dapat mengunduh video yang memiliki ukuran di atas *450 MB*
-- Anda tidak mengunduh video yang mempunyai geo-restriction (Contoh: *Muse Indonesia*)`));
+- Anda tidak dapat mengunduh video yang mempunyai geo-restriction (Contoh: *Muse Indonesia*)`));
 
 // command help
 bot.command('help', (ctx) => ctx.reply(`Anda hanya perlu mengirimkan link dari video yang ingin diunduh`));
