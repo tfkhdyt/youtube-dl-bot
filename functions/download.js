@@ -12,7 +12,6 @@ module.exports = (url, formatCode, ctx, info) => {
     format: `${formatCode}+140`,
     mergeOutputFormat: 'mp4',
     continue: true,
-    geoBypass: true,
     geoBypassCountry: 'ID',
     output: `%(id)s-${formatCode}`,
     ffmpegLocation: "node_modules/ffmpeg-static/ffmpeg"
