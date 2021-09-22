@@ -20,7 +20,7 @@ module.exports = (info, formatCode, ctx, url) => {
   });
   ctx.replyWithVideo(
     {
-      source: fs.createReadStream(fileToUpload),
+      source: fs.createReadStream('./' + fileToUpload),
       filename: info.judul + '.mp4'
     },
     {
@@ -38,7 +38,6 @@ module.exports = (info, formatCode, ctx, url) => {
     clearCache(path, url);
   })
   .catch(err => {
-    ctx.deleteMessage(textLoad);
     console.log('Error yang terjadi saat upload:', err);
   });
 };
