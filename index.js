@@ -14,8 +14,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const API_ROOT = process.env.API_ROOT;
 
 // deklarasi global variables
-let url;
-let data = {};
+let url, bot, data;
 
 // Atur mode
 switch (NODE_ENV) {
@@ -70,3 +69,6 @@ switch(NODE_ENV) {
     }
   }; break;
 }
+
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));

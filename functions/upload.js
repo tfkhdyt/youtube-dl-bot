@@ -20,7 +20,7 @@ module.exports = (info, formatCode, ctx, url) => {
   });
   return ctx.replyWithVideo(
     {
-      source: fileToUpload,
+      source: fs.createReadStream(fileToUpload),
       filename: info.judul + '.mp4'
     },
     {
