@@ -12,7 +12,7 @@ module.exports = (link, ctx) => {
     console.log('Error yang terjadi:', err);
     return youtubedl(link, {
       dumpSingleJson: true,
-      proxy: 'https://114.199.80.100:8182',
+      proxy: 'https://36.94.183.153:8080',
       preferFreeFormats: true,
       youtubeSkipDashManifest: true
     })
