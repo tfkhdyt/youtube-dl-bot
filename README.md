@@ -2,7 +2,7 @@
 Sebuah Bot Telegram untuk mendownload video dari YouTube
 
 # Screenshots
-<a href="https://postimg.cc/yJSzJCV2" target="_blank"><img src="https://i.postimg.cc/yJSzJCV2/Screenshot-2021-09-20-19-17-59-87-0b342c26d6c44f3c8d2de40eabb4e1da.jpg" alt="Screenshot-2021-09-20-19-17-59-87-0b342c26d6c44f3c8d2de40eabb4e1da"/></a> <a href="https://postimg.cc/K1W2v8yn" target="_blank"><img src="https://i.postimg.cc/K1W2v8yn/Screenshot-2021-09-20-19-18-20-21-0b342c26d6c44f3c8d2de40eabb4e1da.jpg" alt="Screenshot-2021-09-20-19-18-20-21-0b342c26d6c44f3c8d2de40eabb4e1da"/></a> 
+<a href="https://postimg.cc/NKnwZS1x" target="_blank"><img src="https://i.postimg.cc/NKnwZS1x/Screenshot-2021-09-22-22-56-05-81.jpg" alt="Screenshot-2021-09-22-22-56-05-81"/></a> <a href="https://postimg.cc/w1Mpfgsv" target="_blank"><img src="https://i.postimg.cc/w1Mpfgsv/Screenshot-2021-09-22-22-58-50-96-0b342c26d6c44f3c8d2de40eabb4e1da.jpg" alt="Screenshot-2021-09-22-22-58-50-96-0b342c26d6c44f3c8d2de40eabb4e1da"/></a> 
 
 # Support 💰
 Klik tombol di bawah untuk mendukung saya lewat donasi
