@@ -9,7 +9,7 @@ module.exports = (link, ctx) => {
   })
   .then(data => data)
   .catch(err => {
-    console.log('Error yang terjadi:', err);
+    console.log('Error yang terjadi:', err.json());
     ctx.deleteMessage(textLoad);
     return ctx.reply('Video tidak ditemukan, pastikan link video tersebut sudah benar! 🙏🏼');
   });
