@@ -1,0 +1,52 @@
+Arguments: 
+  /data/data/com.termux/files/usr/bin/node /data/data/com.termux/files/usr/bin/yarn add woke-dyno
+
+PATH: 
+  /data/data/com.termux/files/usr/bin
+
+Yarn version: 
+  1.22.11
+
+Node version: 
+  16.9.1
+
+Platform: 
+  android arm64
+
+Trace: 
+  SyntaxError: /data/data/com.termux/files/home/youtube-dl-bot/package.json: Unexpected token / in JSON at position 302
+      at JSON.parse (<anonymous>)
+      at /data/data/com.termux/files/usr/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/data/data/com.termux/files/usr/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /data/data/com.termux/files/usr/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "youtube-dl-bot",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "start": "micro-bot",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "dotenv": "^10.0.0",
+      //"ffmpeg-static": "^4.4.0",
+      "glob": "^7.1.7",
+      "micro-bot": "^2.5.3",
+      "telegraf": "^4.4.2",
+      "telegram-keyboard": "^2.2.6",
+      "youtube-dl-exec": "^1.2.6"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
