@@ -6,10 +6,8 @@ const clearCache = require('./clearCache');
 module.exports = async (info, formatCode, ctx, url) => {
   console.log('Uploading...');
   ctx.deleteMessage(textLoad);
-  for (let i = 5; i >= 1; i--){
-    ctx.replyWithMarkdown(`_⬆️ Sedang mengunggah..._\nProses ini mungkin sedikit lebih lama\nPesan ini akan hilang dalam hitungan ${i}...`);
-    setTimeout(() => { ctx.deleteMessage() }, 1000);
-  }
+  ctx.replyWithMarkdown(`_⬆️ Sedang mengunggah..._\nProses ini mungkin sedikit lebih lama`);
+  setTimeout(() => { ctx.deleteMessage() }, 5000);
 
   console.log('message id dari pesan "sedang memproses":', textLoad);
 
