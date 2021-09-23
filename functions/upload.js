@@ -15,25 +15,31 @@ module.exports = (info, formatCode, ctx, url) => {
       console.log(file);
     });
   });
-  ctx.replyWithVideo(
-    {
-      source: fs.createReadStream('./' + fileToUpload),
-      filename: info.judul + '.mp4'
-    },
-    {
-      ...Markup.inlineKeyboard([[
-        Markup.button.url('💵 Donasi', 'https://donate.tfkhdyt.my.id/'),
-        Markup.button.url('💻 Source Code', 'https://github.com/tfkhdyt/youtube-dl-bot/')
-      ], [
-        Markup.button.url('💠 Project saya yang lainnya', 'https://tfkhdyt.my.id/#portfolio')
-      ]
-      ])
+  try {
+    ctx.replyWithVideo(
+      {
+        source: fs.createReadStream('./' + fileToUpload),
+        filename: info.judul + '.mp4'
+      },
+      {
+        ...Markup.inlineKeyboard([[
+          Markup.button.url('💵 Donasi', 'https://donate.tfkhdyt.my.id/'),
+          Markup.button.url('💻 Source Code', 'https://github.com/tfkhdyt/youtube-dl-bot/')
+        ], [
+          Markup.button.url('💠 Project saya yang lainnya', 'https://tfkhdyt.my.id/#portfolio')
+        ]
+        ])
+      })
+    .then(() => {
+      const path =  './' + fileToUpload;
+      clearCache(path, url);
     })
-  .then(() => {
-    const path =  './' + fileToUpload;
-    clearCache(path, url);
-  })
-  .catch(err => {
-    console.log('Error yang terjadi saat upload:', err);
-  });
+    .catch(err => {
+      console.log('Error yang terjadi saat upload:', err);
+    });
+  } catch (err) {
+    console.log('Terdapat exception saat upload:', err);
+  } finally {
+    ctx.deleteMessage(textLoad);
+  }
 };
