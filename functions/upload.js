@@ -30,7 +30,6 @@ module.exports = (info, formatCode, ctx, url) => {
       ])
     })
   .then(() => {
-    ctx.deleteMessage(textLoad);
     const path =  './' + fileToUpload;
     clearCache(path, url);
   })

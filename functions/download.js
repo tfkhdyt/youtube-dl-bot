@@ -6,6 +6,8 @@ module.exports = (url, formatCode, ctx, info) => {
   console.log('Downloading...');
   ctx.replyWithMarkdown('_🔁 Sedang memproses..._')
   .then(m => textLoad = m.message_id);
+  setTimeout(() => { ctx.deleteMessage(textLoad); }, 5000);
+  
   youtubedl(url, {
     format: `${formatCode}+140`,
     mergeOutputFormat: 'mp4',
@@ -21,7 +23,6 @@ module.exports = (url, formatCode, ctx, info) => {
     upload(info, formatCode, ctx, url);
   })
   .catch(err => {
-    ctx.deleteMessage(textLoad);
     console.log('Error yang terjadi saat download:', err);
   });
 };
