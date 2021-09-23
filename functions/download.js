@@ -4,7 +4,7 @@ const upload = require('./upload');
 
 module.exports = (url, formatCode, ctx, info) => {
   console.log('Downloading...');
-  ctx.replyWithMarkdown('_🔁 Sedang memproses..._')
+  ctx.replyWithMarkdown('_⬇️ Sedang mengunduh..._')
   .then(m => textLoad = m.message_id);
   //setTimeout(() => { ctx.deleteMessage(textLoad); }, 5000);
   
