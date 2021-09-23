@@ -3,7 +3,7 @@ const youtubedl = require('youtube-dl-exec');
 const fs = require('fs');
 const clearCache = require('./clearCache');
 
-module.exports = (info, formatCode, ctx, url) => {
+module.exports = async (info, formatCode, ctx, url) => {
   console.log('Uploading...');
   ctx.deleteMessage(textLoad);
   ctx.replyWithMarkdown('_⬆️ Sedang mengunggah..._')
@@ -18,7 +18,7 @@ module.exports = (info, formatCode, ctx, url) => {
       console.log(file);
     });
   });
-  ctx.replyWithVideo(
+  await ctx.replyWithVideo(
     {
       source: fs.createReadStream('./' + fileToUpload),
       filename: info.judul + '.mp4'
@@ -32,12 +32,10 @@ module.exports = (info, formatCode, ctx, url) => {
       ]
       ])
     })
-  .then(() => {
-    ctx.deleteMessage(textLoad);
-    const path = './' + fileToUpload;
-    clearCache(path, url, ctx);
-  })
   .catch(err => {
     console.log('Error yang terjadi saat upload:', err);
   });
+  ctx.deleteMessage(textLoad);
+  const path = './' + fileToUpload;
+  clearCache(path, url, ctx);
 };

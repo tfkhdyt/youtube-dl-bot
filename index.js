@@ -50,12 +50,13 @@ bot.on('text', async (ctx) => {
 });
 
 // callback
-bot.on('callback_query', (ctx) => {
+bot.on('callback_query', async (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
   const formatCode = ctx.callbackQuery.data;
   const localData = data;
   console.log('Local data:', localData);
-  download(url, formatCode, ctx, localData);
+  await download(url, formatCode, ctx, localData);
+  ctx.deleteMessage(textLoad);
 });
 
 switch(NODE_ENV) {
