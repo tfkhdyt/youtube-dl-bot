@@ -7,7 +7,9 @@ module.exports = async (info, formatCode, ctx, url) => {
   console.log('Uploading...');
   ctx.deleteMessage(textLoad);
   ctx.replyWithMarkdown(`_⬆️ Sedang mengunggah..._\nProses ini mungkin sedikit lebih lama`).then(m => textLoad = m.message_id);
-  setTimeout(() => { ctx.deleteMessage(textLoad) }, 5000);
+  setTimeout(() => {
+    ctx.deleteMessage(textLoad);
+  }, 5000);
 
   console.log('message id dari pesan "sedang memproses":', textLoad);
 
@@ -19,23 +21,25 @@ module.exports = async (info, formatCode, ctx, url) => {
       console.log(file);
     });
   });
-  await ctx.replyWithVideo(
-    {
-      source: fs.createReadStream('./' + fileToUpload),
-      filename: info.judul + '.mp4'
-    },
+  await ctx.replyWithVideo({
+    source: fs.createReadStream('./' + fileToUpload),
+    filename: info.judul + '.mp4'
+  },
     {
       ...Markup.inlineKeyboard([[
         Markup.button.url('💵 Donasi', 'https://donate.tfkhdyt.my.id/'),
         Markup.button.url('💻 Source Code', 'https://github.com/tfkhdyt/youtube-dl-bot/')
       ], [
         Markup.button.url('💠 Project saya yang lainnya', 'https://tfkhdyt.my.id/#portfolio')
-      ]
-      ])
-    })
+      ]])
+    }
+  )
+  .then(res => {
+    console.log('Upload:', res);
+    const path = './' + fileToUpload;
+    clearCache(path, url, ctx);
+  })
   .catch(err => {
     console.log('Error yang terjadi saat upload:', err);
   });
-  const path = './' + fileToUpload;
-  clearCache(path, url, ctx);
 };

@@ -55,8 +55,7 @@ bot.on('callback_query', async (ctx) => {
   const formatCode = ctx.callbackQuery.data;
   const localData = data;
   console.log('Local data:', localData);
-  await download(url, formatCode, ctx, localData);
-  ctx.deleteMessage(textLoad);
+  download(url, formatCode, ctx, localData);
 });
 
 switch(NODE_ENV) {
