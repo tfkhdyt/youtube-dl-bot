@@ -2,7 +2,6 @@
 const { Telegraf } = require('telegraf');
 const { Composer } = require('micro-bot');
 const glob = require('glob');
-const wakeDyno = require("woke-dyno");
 require('dotenv').config();
 
 // import function
@@ -62,12 +61,6 @@ bot.on('callback_query', (ctx) => {
 switch(NODE_ENV) {
   case 'development': bot.launch(); break;
   case 'production': 
-    wakeDyno({
-      url: `${API_ROOT}/bot${BOT_TOKEN}/getMe`,  // url string
-      interval: 1500000, // interval in milliseconds (1 minute in this example)
-      startNap: [21, 0, 0, 0], // the time to start nap in UTC, as [h, m, s, ms] (05:00 UTC in this example)
-      endNap: [4, 0, 0, 0] // time to wake up again, in UTC (09:59:59.999 in this example)
-    }).start(); 
     module.exports = {
       bot,
       options: {

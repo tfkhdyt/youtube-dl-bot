@@ -4,10 +4,8 @@ const upload = require('./upload');
 
 module.exports = (url, formatCode, ctx, info) => {
   console.log('Downloading...');
-  ctx.replyWithMarkdown('_⬇️ Sedang mengunduh..._')
-  .then(m => {
-    textLoad = m.message_id;
-  });
+  info.textLoad = ctx.replyWithMarkdown('_🔁 Sedang memproses..._')
+  .then(m => m.message_id);
   youtubedl(url, {
     format: `${formatCode}+140`,
     mergeOutputFormat: 'mp4',
@@ -18,12 +16,11 @@ module.exports = (url, formatCode, ctx, info) => {
     rmCacheDir: true
   })
   .then((data) => {
-    ctx.deleteMessage(textLoad);
     console.log('Download:', data);
     upload(info, formatCode, ctx, url);
   })
   .catch(err => {
-    ctx.deleteMessage(textLoad);
+    ctx.deleteMessage(info.textLoad);
     console.log('Error yang terjadi saat download:', err);
   });
 };

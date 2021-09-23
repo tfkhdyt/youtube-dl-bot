@@ -5,10 +5,7 @@ const clearCache = require('./clearCache');
 
 module.exports = (info, formatCode, ctx, url) => {
   console.log('Uploading...');
-  ctx.replyWithMarkdown('_⬆️ Sedang mengunggah..._')
-  .then(m => {
-    textLoad = m.message_id;
-  });
+  console.log('message id dari pesan "sedang memproses":', info.textLoad);
     
   const fileToUpload = `${info.id}-${formatCode}.mp4`;
   console.log(fileToUpload);
@@ -33,7 +30,7 @@ module.exports = (info, formatCode, ctx, url) => {
       ])
     })
   .then(() => {
-    ctx.deleteMessage(textLoad);
+    ctx.deleteMessage(info.textLoad);
     const path =  './' + fileToUpload;
     clearCache(path, url);
   })
