@@ -6,8 +6,12 @@ const clearCache = require('./clearCache');
 module.exports = async (info, formatCode, ctx, url) => {
   console.log('Uploading...');
   ctx.deleteMessage(textLoad);
-  ctx.replyWithMarkdown('_⬆️ Sedang mengunggah..._')
-  .then(m => textLoad = m.message_id);
+  for (let i = 5; i >= 1; i--){
+    ctx.replyWithMarkdown(`_⬆️ Sedang mengunggah..._\nProses ini mungkin sedikit lebih lama\nPesan ini akan hilang dalam hitungan ${i}...`)
+    .then(m => textLoad = m.message_id);
+    setTimeout(() => { ctx.deleteMessage(textLoad) }, 1000);
+  }
+
   console.log('message id dari pesan "sedang memproses":', textLoad);
 
   const fileToUpload = `${info.id}-${formatCode}.mp4`;
@@ -35,7 +39,6 @@ module.exports = async (info, formatCode, ctx, url) => {
   .catch(err => {
     console.log('Error yang terjadi saat upload:', err);
   });
-  ctx.deleteMessage(textLoad);
   const path = './' + fileToUpload;
   clearCache(path, url, ctx);
 };
