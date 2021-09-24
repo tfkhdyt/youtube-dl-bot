@@ -7,13 +7,15 @@ const showQuality = require('./showQuality');
 
 module.exports = async (url, ctx, messageId) => {
   console.log('Searching');
+  let info;
+  info.url = url;
   ctx.replyWithMarkdown('_🔎 Sedang mencari..._', { reply_to_message_id : messageId })
   .then(m => {
-    textLoad = m.message_id;
+    info.textLoad = m.message_id;
   });
   
-  const data = await getMetadata(url, ctx);
-  const formats = getFormats(data.formats);
+  const data = await getMetadata(info, ctx);
+  const { formats, audioFileSize } = getFormats(data.formats);
 
   const judul = data.title;
   const id = data.display_id;
@@ -37,8 +39,8 @@ module.exports = async (url, ctx, messageId) => {
     reply_to_message_id: messageId
   })
   .then(() => {
-    ctx.deleteMessage(textLoad);
-    ctx.reply(`🎥 Pilih kualitas: `, showQuality(formats));
+    ctx.deleteMessage(info.textLoad);
+    ctx.reply(`🎥 Pilih kualitas: `, showQuality(formats, audioFileSize));
   });
   console.log(id, judul);
   return { id, judul };

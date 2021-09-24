@@ -1,17 +1,16 @@
 const { Markup } = require('telegraf');
-const youtubedl = require('youtube-dl-exec');
 const fs = require('fs');
 const clearCache = require('./clearCache');
 
-module.exports = async (info, formatCode, ctx, url) => {
+module.exports = async (info, formatCode, ctx) => {
   console.log('Uploading...');
-  ctx.deleteMessage(textLoad);
-  ctx.replyWithMarkdown(`_⬆️ Sedang mengunggah..._\nProses ini mungkin sedikit lebih lama`).then(m => textLoad = m.message_id);
+  ctx.deleteMessage(info.textLoad);
+  ctx.replyWithMarkdown(`_⬆️ Sedang mengunggah..._\nProses ini mungkin sedikit lebih lama`).then(m => info.textLoad = m.message_id);
   setTimeout(() => {
-    ctx.deleteMessage(textLoad);
+    ctx.deleteMessage(info.textLoad);
   }, 5000);
 
-  console.log('message id dari pesan "sedang memproses":', textLoad);
+  console.log('message id dari pesan "sedang memproses":', info.textLoad);
 
   const fileToUpload = `${info.id}-${formatCode}.mp4`;
   console.log(fileToUpload);

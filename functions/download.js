@@ -1,11 +1,10 @@
 const youtubedl = require('youtube-dl-exec');
-const getMetadata = require('./getMetadata');
 const upload = require('./upload');
 
 module.exports = (url, formatCode, ctx, info) => {
   console.log('Downloading...');
   ctx.replyWithMarkdown('_⬇️ Sedang mengunduh..._')
-  .then(m => textLoad = m.message_id);
+  .then(m => info.textLoad = m.message_id);
   //setTimeout(() => { ctx.deleteMessage(textLoad); }, 5000);
   
   youtubedl(url, {
@@ -22,7 +21,7 @@ module.exports = (url, formatCode, ctx, info) => {
   })
   .then((data) => {
     console.log('Download:', data);
-    upload(info, formatCode, ctx, url);
+    upload(info, formatCode, ctx);
   })
   .catch(err => {
     console.log('Error yang terjadi saat download:', err);
