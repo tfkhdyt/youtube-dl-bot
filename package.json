@@ -19,5 +19,8 @@
     "telegram-keyboard": "^2.2.6",
     "woke-dyno": "^0.0.4",
     "youtube-dl-exec": "^1.2.6"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
   }
 }
