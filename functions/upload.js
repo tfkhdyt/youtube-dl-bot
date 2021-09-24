@@ -37,7 +37,7 @@ module.exports = async (info, formatCode, ctx, url) => {
   .then(res => {
     console.log('Upload:', res);
     const path = './' + fileToUpload;
-    clearCache(path, url, ctx);
+    clearCache(path);
   })
   .catch(err => {
     console.log('Error yang terjadi saat upload:', err);

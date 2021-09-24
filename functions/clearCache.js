@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-module.exports = (path, url, ctx) => {
+module.exports = (path) => {
   console.log('clearing cache...');
-  fs.unlink(file, (err) => {
+  fs.unlink(path, (err) => {
     if (err) throw err;
     console.log("File removed:", path);
   });
