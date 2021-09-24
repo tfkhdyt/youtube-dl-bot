@@ -7,7 +7,7 @@ const showQuality = require('./showQuality');
 
 module.exports = async (url, ctx, messageId) => {
   console.log('Searching');
-  let info;
+  let info = {};
   info.url = url;
   ctx.replyWithMarkdown('_🔎 Sedang mencari..._', { reply_to_message_id : messageId })
   .then(m => {
