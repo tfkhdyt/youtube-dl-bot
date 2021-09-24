@@ -9,8 +9,8 @@ module.exports = (formats, audioFileSize) => {
     const fileSize = formatBytes(format.filesize + audioFileSize);
     return Key.callback(`${quality} | ${vcodec} | ${fileSize}`, id);
   });
-  
+
   return Keyboard.make(keyCallback, {
-    columns: 2
+    columns: 2,
   }).inline();
 };
