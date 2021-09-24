@@ -1,7 +1,6 @@
 // import module
 const { Telegraf } = require('telegraf');
 const { Composer } = require('micro-bot');
-const glob = require('glob');
 require('dotenv').config();
 
 // import function
