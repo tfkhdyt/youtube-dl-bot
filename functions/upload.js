@@ -2,7 +2,7 @@ const { Markup } = require('telegraf');
 const fs = require('fs');
 const clearCache = require('./clearCache');
 
-module.exports = async (info, formatCode, ctx) => {
+module.exports = (info, formatCode, ctx) => {
   console.log('Uploading...');
   ctx.deleteMessage(info.textLoad);
   ctx
@@ -24,7 +24,7 @@ module.exports = async (info, formatCode, ctx) => {
       console.log(file);
     });
   });
-  await ctx
+  ctx
     .replyWithVideo(
       {
         source: fs.createReadStream('./' + fileToUpload),

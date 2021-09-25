@@ -30,13 +30,21 @@ switch (NODE_ENV) {
 }
 
 // command start
-bot.start((ctx) =>
-  ctx.replyWithMarkdown(`Halo ${ctx.from.first_name}, selamat datang di YT-DL Bot, kirim link video yang ingin anda unduh untuk mengunduh video tersebut.
+bot.start((ctx) => {
+  console.log(ctx);
+  ctx.replyWithMarkdown(
+    `Halo @${ctx.from.username}, selamat datang di [YouTube Downloader Bot](https://t.me/tfkhdyt_ytdl_bot), kirim link video yang ingin anda unduh untuk mengunduh video tersebut.
+Untuk video yang memiliki subtitle, maka secara otomatis semua subtitle itu akan ter-embed ke dalam video.
+_*YouTube Downloader lain mana bisa_
 
 *PERHATIAN*: 
 - Dikarenakan storage hosting yang terbatas, maka kalian tidak dapat mengunduh video yang memiliki ukuran di atas *450 MB*
-- Anda tidak dapat mengunduh video yang mempunyai geo-restriction (Contoh: *Muse Indonesia*)`)
-);
+- Anda tidak dapat mengunduh video yang mempunyai geo-restriction (Contoh: *Muse Indonesia*)`,
+    {
+      disable_web_page_preview: true,
+    }
+  );
+});
 
 // command help
 bot.command('help', (ctx) =>
