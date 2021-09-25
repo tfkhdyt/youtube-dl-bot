@@ -21,6 +21,7 @@ module.exports = (url, formatCode, ctx, info) => {
     rmCacheDir: true,
     allSubs: true,
     embedSubs: true,
+    embedThumbnail: true,
   })
     .then((data) => {
       console.log('Download:', data);
