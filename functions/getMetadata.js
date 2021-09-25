@@ -4,7 +4,7 @@ module.exports = (info, ctx) => {
   return youtubedl(info.url, {
     dumpSingleJson: true,
     // proxy: 'https://114.199.80.100:8182',
-    preferFreeFormats: true,
+    // preferFreeFormats: true,
     youtubeSkipDashManifest: true,
   })
     .then((data) => data)
