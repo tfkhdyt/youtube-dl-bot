@@ -19,6 +19,8 @@ module.exports = (url, formatCode, ctx, info) => {
     output: `%(id)s-${formatCode}`,
     ffmpegLocation: 'node_modules/ffmpeg-static/ffmpeg',
     rmCacheDir: true,
+    allSubs: true,
+    embedSubs: true,
   })
     .then((data) => {
       console.log('Download:', data);
