@@ -21,8 +21,8 @@ module.exports = (url, formatCode, ctx, info) => {
     rmCacheDir: true,
     allSubs: true,
     embedSubs: true,
-    embedThumbnail: true,
-    postprocessorArgs: '-write_id3v1 1 -id3v2_version 3'
+    // embedThumbnail: true,
+    // postprocessorArgs: '-write_id3v1 1 -id3v2_version 3'
   })
     .then((data) => {
       console.log('Download:', data);
