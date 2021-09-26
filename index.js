@@ -76,7 +76,7 @@ bot.on('callback_query', async (ctx) => {
   callbackQuery = callbackQuery.split(',');
   const formatCode = callbackQuery[0];
   const display_id = callbackQuery[1];
-  const judul = youtubedl(`https://youtu.be/${display_id}`, {
+  const judul = await youtubedl(`https://youtu.be/${display_id}`, {
     simulate: true,
     getTitle: true,
   }).then(res => res);
