@@ -17,7 +17,7 @@ module.exports = (formats, audioFileSize, info) => {
         vcodec = 'MP3';
     }
     const fileSize = (vcodec != 'MP3') ? formatBytes(format.filesize + audioFileSize) : formatBytes(format.filesize);
-    return Key.callback(`${quality} | ${vcodec} | ${fileSize}`, { id, url: info.url });
+    return Key.callback(`${quality} | ${vcodec} | ${fileSize}`, `${id},${info.url}`);
   });
 
   return Keyboard.make(keyCallback, {

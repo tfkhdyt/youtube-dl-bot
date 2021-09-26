@@ -68,8 +68,10 @@ bot.on('text', async (ctx) => {
 // callback
 bot.on('callback_query', async (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
-  const formatCode = ctx.callbackQuery.data.id;
-  const url = ctx.callbackQuery.data.url;
+  let callbackQuery = ctx.callbackQuery.data;
+  callbackQuery = callbackQuery.split(',');
+  const formatCode = callbackQuery[0];
+  const url = callbackQuery[1];
   const localData = data;
   console.log('Local data:', localData);
   download(url, formatCode, ctx, localData);
