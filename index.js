@@ -1,6 +1,7 @@
 // import module
 const { Telegraf } = require('telegraf');
 const { Composer } = require('micro-bot');
+const youtubedl = require('youtube-dl-exec');
 require('dotenv').config();
 
 // import function
@@ -75,12 +76,12 @@ bot.on('callback_query', async (ctx) => {
   callbackQuery = callbackQuery.split(',');
   const formatCode = callbackQuery[0];
   const display_id = callbackQuery[1];
-  const judul = callbackQuery
-    .filter((e, i) => {
-      return i >= 2;
-    })
-    .join(' ');
-
+  const judul = youtubedl(`https://youtu.be/${display_id}`, {
+    simulate: true,
+    getTitle: true,
+  }).then(res => res);
+  console.log('Judul video:', judul);
+  
   const info = { formatCode, display_id, judul };
   // const localData = data;
   // console.log('Local data:', localData);
