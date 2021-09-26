@@ -3,6 +3,6 @@ module.exports = (quality) => {
     case 'Audio':
       return '🎵';
     default:
-      return '📽️';
+      return '📹';
   }
 };
