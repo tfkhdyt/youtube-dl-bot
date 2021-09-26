@@ -15,8 +15,10 @@ module.exports = (info, formatCode, ctx) => {
   }, 5000);
 
   console.log('message id dari pesan "sedang memproses":', info.textLoad);
+  
+  const extension = (formatCode == '140') ? 'mp3' : 'mp4';
 
-  const fileToUpload = `${info.id}-${formatCode}.mp4`;
+  const fileToUpload = `${info.id}-${formatCode}.${extension}`;
   console.log(fileToUpload);
   fs.readdir('./', (err, files) => {
     if (err) throw err;
@@ -24,11 +26,11 @@ module.exports = (info, formatCode, ctx) => {
       console.log(file);
     });
   });
-  ctx
-    .replyWithVideo(
+  const send = (formatCode == '140') ? ctx.replyWithAudio : ctx.replyWithVideo;
+  send(
       {
-        source: fs.createReadStream('./' + fileToUpload),
-        filename: info.judul + '.mp4',
+        source: fileToUpload,
+        filename: info.judul + `.${extension}`,
       },
       {
         ...Markup.inlineKeyboard([

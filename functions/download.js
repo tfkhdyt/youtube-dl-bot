@@ -7,23 +7,33 @@ module.exports = (url, formatCode, ctx, info) => {
     .replyWithMarkdown('_⬇️ Sedang mengunduh..._')
     .then((m) => (info.textLoad = m.message_id));
   //setTimeout(() => { ctx.deleteMessage(textLoad); }, 5000);
-
-  youtubedl(url, {
+  const audioOption = {
+    format: `${formatCode}`,
+    c: true,
+    ignoreErrors: true,
+    externalDownloader: 'ffmpeg',
+    verbose: true,
+    output: `%(id)s-${formatCode}`,
+    ffmpegLocation: 'node_modules/ffmpeg-static/ffmpeg',
+    rmCacheDir: true,
+  };
+  
+  const videoOption = {
     format: `${formatCode}+140`,
     mergeOutputFormat: 'mp4',
     c: true,
     ignoreErrors: true,
     externalDownloader: 'ffmpeg',
     verbose: true,
-    // proxy: 'https://114.199.80.100:8182',
     output: `%(id)s-${formatCode}`,
     ffmpegLocation: 'node_modules/ffmpeg-static/ffmpeg',
     rmCacheDir: true,
     allSubs: true,
     embedSubs: true,
-    // embedThumbnail: true,
-    // postprocessorArgs: '-write_id3v1 1 -id3v2_version 3'
-  })
+  };
+  
+  const option = (formatCode == '140') ? audioOption : videoOption;
+  youtubedl(url, option)
     .then((data) => {
       console.log('Download:', data);
       upload(info, formatCode, ctx);
