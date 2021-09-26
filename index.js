@@ -39,6 +39,7 @@ Untuk video yang memiliki subtitle, maka secara otomatis semua subtitle itu akan
 _*YouTube Downloader lain mana bisa_
 
 *PERHATIAN*: 
+- Bot tidur mulai jam 21:00 WIB sampai 04:00 WIB
 - Dikarenakan storage hosting yang terbatas, maka kalian tidak dapat mengunduh video yang memiliki ukuran di atas *450 MB*
 - Anda tidak dapat mengunduh video yang mempunyai geo-restriction (Contoh: *Muse Indonesia*)`,
     {
