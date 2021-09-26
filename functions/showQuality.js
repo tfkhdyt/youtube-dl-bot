@@ -1,19 +1,18 @@
 const { Keyboard, Key } = require('telegram-keyboard');
 const formatBytes = require('./formatBytes');
+const getIcon = require('./getIcon');
 
 module.exports = (formats, audioFileSize, info) => {
   const keyCallback = formats.map((format) => {
     const id = format.format_id;
     const quality = format.format_note == 'tiny' ? 'Audio' : format.format_note;
-    let vcodec = format.vcodec.substring(0, 4).toUpperCase();
+    const icon = getIcon(quality);
+    let vcodec = format.vcodec.substring(0, 3).toUpperCase();
     switch (vcodec) {
-      case 'AVC1':
-        vcodec = 'AVC';
-        break;
-      case 'AV01':
+      case 'AV0':
         vcodec = 'AV1';
         break;
-      case 'NONE':
+      case 'NON':
         vcodec = 'MP3';
     }
     const fileSize =
@@ -21,7 +20,7 @@ module.exports = (formats, audioFileSize, info) => {
         ? formatBytes(format.filesize + audioFileSize)
         : formatBytes(format.filesize);
     return Key.callback(
-      `${quality} | ${vcodec} | ${fileSize}`,
+      `${icon} ${quality} | ${vcodec} | ${fileSize}`,
       `${id},${info.display_id}`
     );
   });

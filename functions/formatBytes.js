@@ -1,4 +1,4 @@
-module.exports = (bytes, decimals = 2) => {
+module.exports = (bytes, decimals = 1) => {
   if (bytes === 0) return '0 Bytes';
 
   const k = 1024;
