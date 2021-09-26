@@ -75,7 +75,7 @@ bot.on('callback_query', async (ctx) => {
   callbackQuery = callbackQuery.split(',');
   const formatCode = callbackQuery[0];
   const display_id = callbackQuery[1];
-  const info = { formatCode, display_id };
+  const info = { formatCode, display_id, judul: data.judul };
   // const localData = data;
   // console.log('Local data:', localData);
   download(ctx, info);
