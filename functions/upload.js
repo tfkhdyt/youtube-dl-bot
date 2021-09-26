@@ -30,6 +30,7 @@ module.exports = (ctx, info) => {
   console.log();
   const send =
     info.formatCode == '140' ? ctx.replyWithAudio : ctx.replyWithVideo;
+  console.log(info.judul);
   send(
     {
       source: fileToUpload,
