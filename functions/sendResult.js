@@ -52,7 +52,10 @@ module.exports = async (url, ctx, messageId) => {
     })
     .then(() => {
       ctx.deleteMessage(info.textLoad);
-      ctx.reply(`🎥 Pilih kualitas: `, showQuality(formats, audioFileSize, info));
+      ctx.reply(
+        `🎥 Pilih kualitas: `,
+        showQuality(formats, audioFileSize, info)
+      );
     });
   console.log(id, judul);
   return { id, judul };

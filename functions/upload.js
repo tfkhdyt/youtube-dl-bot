@@ -28,7 +28,8 @@ module.exports = (ctx, info) => {
     });
   });
   console.log();
-  const send = info.formatCode == '140' ? ctx.replyWithAudio : ctx.replyWithVideo;
+  const send =
+    info.formatCode == '140' ? ctx.replyWithAudio : ctx.replyWithVideo;
   send(
     {
       source: fileToUpload,
