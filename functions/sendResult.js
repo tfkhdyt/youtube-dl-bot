@@ -22,6 +22,7 @@ module.exports = async (url, ctx, messageId) => {
 
   const judul = data.title;
   const id = data.display_id;
+  info.display_id = id;
   const tanggal = dateFormatter(data.upload_date);
   const channel = data.channel;
   const durasi = secondsToTimestamp(data.duration);

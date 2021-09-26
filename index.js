@@ -71,10 +71,11 @@ bot.on('callback_query', async (ctx) => {
   let callbackQuery = ctx.callbackQuery.data;
   callbackQuery = callbackQuery.split(',');
   const formatCode = callbackQuery[0];
-  const url = callbackQuery[1];
-  const localData = data;
-  console.log('Local data:', localData);
-  download(url, formatCode, ctx, localData);
+  const display_id = callbackQuery[1];
+  const info = { formatCode, display_id };
+  // const localData = data;
+  // console.log('Local data:', localData);
+  download(ctx, info);
 });
 
 switch (NODE_ENV) {

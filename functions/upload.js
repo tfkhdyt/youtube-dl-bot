@@ -2,7 +2,7 @@ const { Markup } = require('telegraf');
 const fs = require('fs');
 const clearCache = require('./clearCache');
 
-module.exports = (info, formatCode, ctx) => {
+module.exports = (ctx, info) => {
   console.log('Uploading...');
   ctx.deleteMessage(info.textLoad);
   ctx
@@ -16,9 +16,9 @@ module.exports = (info, formatCode, ctx) => {
 
   console.log('message id dari pesan "sedang memproses":', info.textLoad);
 
-  const extension = formatCode == '140' ? 'mp3' : 'mp4';
+  const extension = info.formatCode == '140' ? 'mp3' : 'mp4';
 
-  const fileToUpload = `${info.id}-${formatCode}.${extension}`;
+  const fileToUpload = `${info.display_id}-${info.formatCode}.${extension}`;
   console.log('Nama file output:', fileToUpload);
   console.log();
   fs.readdir('./', (err, files) => {
@@ -28,7 +28,7 @@ module.exports = (info, formatCode, ctx) => {
     });
   });
   console.log();
-  const send = formatCode == '140' ? ctx.replyWithAudio : ctx.replyWithVideo;
+  const send = info.formatCode == '140' ? ctx.replyWithAudio : ctx.replyWithVideo;
   send(
     {
       source: fileToUpload,
