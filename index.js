@@ -80,9 +80,9 @@ bot.on('callback_query', async (ctx) => {
   const judul = await youtubedl(`https://youtu.be/${display_id}`, {
     simulate: true,
     getTitle: true,
-  }).then(res => res);
+  }).then((res) => res);
   console.log('Judul video:', judul);
-  
+
   const info = { formatCode, display_id, judul };
   // const localData = data;
   // console.log('Local data:', localData);
