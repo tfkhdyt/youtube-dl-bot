@@ -15,8 +15,8 @@ module.exports = (info, formatCode, ctx) => {
   }, 5000);
 
   console.log('message id dari pesan "sedang memproses":', info.textLoad);
-  
-  const extension = (formatCode == '140') ? 'mp3' : 'mp4';
+
+  const extension = formatCode == '140' ? 'mp3' : 'mp4';
 
   const fileToUpload = `${info.id}-${formatCode}.${extension}`;
   console.log(fileToUpload);
@@ -26,30 +26,30 @@ module.exports = (info, formatCode, ctx) => {
       console.log(file);
     });
   });
-  const send = (formatCode == '140') ? ctx.replyWithAudio : ctx.replyWithVideo;
+  const send = formatCode == '140' ? ctx.replyWithAudio : ctx.replyWithVideo;
   send(
-      {
-        source: fileToUpload,
-        filename: info.judul + `.${extension}`,
-      },
-      {
-        ...Markup.inlineKeyboard([
-          [
-            Markup.button.url('💵 Donasi', 'https://donate.tfkhdyt.my.id/'),
-            Markup.button.url(
-              '💻 Source Code',
-              'https://github.com/tfkhdyt/youtube-dl-bot/'
-            ),
-          ],
-          [
-            Markup.button.url(
-              '💠 Project saya yang lainnya',
-              'https://tfkhdyt.my.id/#portfolio'
-            ),
-          ],
-        ]),
-      }
-    )
+    {
+      source: fileToUpload,
+      filename: info.judul + `.${extension}`,
+    },
+    {
+      ...Markup.inlineKeyboard([
+        [
+          Markup.button.url('💵 Donasi', 'https://donate.tfkhdyt.my.id/'),
+          Markup.button.url(
+            '💻 Source Code',
+            'https://github.com/tfkhdyt/youtube-dl-bot/'
+          ),
+        ],
+        [
+          Markup.button.url(
+            '💠 Project saya yang lainnya',
+            'https://tfkhdyt.my.id/#portfolio'
+          ),
+        ],
+      ]),
+    }
+  )
     .then((res) => {
       console.log('Upload:', res);
       const path = './' + fileToUpload;

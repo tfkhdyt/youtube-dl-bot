@@ -17,7 +17,7 @@ module.exports = (url, formatCode, ctx, info) => {
     ffmpegLocation: 'node_modules/ffmpeg-static/ffmpeg',
     rmCacheDir: true,
   };
-  
+
   const videoOption = {
     format: `${formatCode}+140`,
     mergeOutputFormat: 'mp4',
@@ -31,8 +31,8 @@ module.exports = (url, formatCode, ctx, info) => {
     allSubs: true,
     embedSubs: true,
   };
-  
-  const option = (formatCode == '140') ? audioOption : videoOption;
+
+  const option = formatCode == '140' ? audioOption : videoOption;
   youtubedl(url, option)
     .then((data) => {
       console.log('Download:', data);
