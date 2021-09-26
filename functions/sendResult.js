@@ -21,6 +21,7 @@ module.exports = async (url, ctx, messageId) => {
   const { formats, audioFileSize } = getFormats(data.formats);
 
   const judul = data.title;
+  info.judul = judul;
   const id = data.display_id;
   info.display_id = id;
   const tanggal = dateFormatter(data.upload_date);

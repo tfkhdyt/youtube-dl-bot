@@ -21,7 +21,7 @@ module.exports = (formats, audioFileSize, info) => {
         : formatBytes(format.filesize);
     return Key.callback(
       `${icon} ${quality} | ${vcodec} | ${fileSize}`,
-      `${id},${info.display_id}`
+      `${id},${info.display_id},${info.judul}`
     );
   });
 
