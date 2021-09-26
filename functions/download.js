@@ -9,6 +9,7 @@ module.exports = (url, formatCode, ctx, info) => {
   //setTimeout(() => { ctx.deleteMessage(textLoad); }, 5000);
   const audioOption = {
     format: `${formatCode}`,
+    x: true,
     audioFormat: 'mp3',
     c: true,
     ignoreErrors: true,
