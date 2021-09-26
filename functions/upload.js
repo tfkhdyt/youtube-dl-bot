@@ -18,8 +18,8 @@ module.exports = (info, formatCode, ctx) => {
 
   const extension = formatCode == '140' ? 'mp3' : 'mp4';
 
-  const fileToUpload = `Nama file output: ${info.id}-${formatCode}.${extension}`;
-  console.log(fileToUpload);
+  const fileToUpload = `${info.id}-${formatCode}.${extension}`;
+  console.log('Nama file output:', fileToUpload);
   console.log();
   fs.readdir('./', (err, files) => {
     if (err) throw err;
