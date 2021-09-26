@@ -18,14 +18,16 @@ module.exports = (info, formatCode, ctx) => {
 
   const extension = formatCode == '140' ? 'mp3' : 'mp4';
 
-  const fileToUpload = `${info.id}-${formatCode}.${extension}`;
+  const fileToUpload = `Nama file output: ${info.id}-${formatCode}.${extension}`;
   console.log(fileToUpload);
+  console.log();
   fs.readdir('./', (err, files) => {
     if (err) throw err;
     files.forEach((file) => {
       console.log(file);
     });
   });
+  console.log();
   const send = formatCode == '140' ? ctx.replyWithAudio : ctx.replyWithVideo;
   send(
     {
