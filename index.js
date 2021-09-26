@@ -32,18 +32,15 @@ switch (NODE_ENV) {
 // command start
 bot.start((ctx) => {
   console.log(ctx);
-  ctx.replyWithMarkdown(
-    `Halo @${ctx.from.username}, selamat datang di [YouTube Downloader Bot](https://t.me/tfkhdyt_ytdl_bot), kirim link video yang ingin anda unduh untuk mengunduh video tersebut.
+  ctx.replyWithMarkdown(`Halo @${ctx.from.username}, selamat datang di [YouTube Downloader Bot](https://t.me/tfkhdyt_ytdl_bot), kirim link video yang ingin anda unduh untuk mengunduh video tersebut.
 Untuk video yang memiliki subtitle, maka secara otomatis semua subtitle itu akan ter-embed ke dalam video.
 _*YouTube Downloader lain mana bisa_
 
 *PERHATIAN*: 
 - Dikarenakan storage hosting yang terbatas, maka kalian tidak dapat mengunduh video yang memiliki ukuran di atas *450 MB*
-- Anda tidak dapat mengunduh video yang mempunyai geo-restriction (Contoh: *Muse Indonesia*)`,
-    {
-      disable_web_page_preview: true,
-    }
-  );
+- Anda tidak dapat mengunduh video yang mempunyai geo-restriction (Contoh: *Muse Indonesia*)`, {
+    disable_web_page_preview: true
+  });
 });
 
 // command help
@@ -71,7 +68,8 @@ bot.on('text', async (ctx) => {
 // callback
 bot.on('callback_query', async (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
-  const formatCode = ctx.callbackQuery.data;
+  const formatCode = ctx.callbackQuery.data.id;
+  const url = ctx.callbackQuery.data.url;
   const localData = data;
   console.log('Local data:', localData);
   download(url, formatCode, ctx, localData);
