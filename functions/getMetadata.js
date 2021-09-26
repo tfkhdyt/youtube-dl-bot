@@ -5,7 +5,7 @@ module.exports = (info, ctx) => {
     dumpSingleJson: true,
     // proxy: 'https://114.199.80.100:8182',
     // preferFreeFormats: true,
-    youtubeSkipDashManifest: true,
+    // youtubeSkipDashManifest: true,
   })
     .then((data) => data)
     .catch((err) => {
