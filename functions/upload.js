@@ -24,7 +24,7 @@ module.exports = (ctx, info) => {
 
   // console.log('message id dari pesan "sedang memproses":', info.textLoad);
 
-  let extension = info.formatCode == '140' ? 'aac' : 'mp4';
+  let extension = info.formatCode == '140' ? 'mp3' : 'mp4';
 
   const fileToUpload = `${info.display_id}-${info.formatCode}.${extension}`;
   // extension = info.formatCode == '140' ? 'mp3' : 'mp4';

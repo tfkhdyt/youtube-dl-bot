@@ -12,12 +12,12 @@ module.exports = (ctx, info) => {
   //setTimeout(() => { ctx.deleteMessage(textLoad); }, 5000);
   const audioOption = {
     format: `${info.formatCode}`,
-    // audioFormat: 'aac',
+    audioFormat: 'mp3',
     c: true,
     ignoreErrors: true,
     externalDownloader: 'ffmpeg',
     verbose: true,
-    output: `%(id)s-${info.formatCode}.aac`,
+    output: `%(id)s-${info.formatCode}.mp3`,
     ffmpegLocation: 'node_modules/ffmpeg-static/ffmpeg',
     rmCacheDir: true,
   };
@@ -48,14 +48,14 @@ module.exports = (ctx, info) => {
     console.log('Download:', data);
     if (info.formatCode == '140') {
       ffmetadata.write(
-        `${info.display_id}-${info.formatCode}.aac`,
+        `${info.display_id}-${info.formatCode}.mp3`,
         metadata,
         async (err) => {
           if (err) {
             console.error('Error writing metadata', err);
           } else {
             console.log('Data written');
-            await ffmetadata.read(`${info.display_id}-${info.formatCode}.aac`, function(err, data) {
+            await ffmetadata.read(`${info.display_id}-${info.formatCode}.mp3`, function(err, data) {
               if (err) console.error("Error reading metadata", err);
               else console.log(data);
             });
