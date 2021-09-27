@@ -3,14 +3,12 @@ const fs = require('fs');
 const clearCache = require('./clearCache');
 
 module.exports = (ctx, info) => {
-  console.log();
   fs.readdir('./', (err, files) => {
     if (err) throw err;
     files.forEach((file) => {
       console.log(file);
     });
   });
-  console.log();
   console.log('Uploading...');
   ctx.deleteMessage(info.textLoad);
   ctx
@@ -57,7 +55,7 @@ module.exports = (ctx, info) => {
     }
   )
     .then(() => {
-      // console.log('Upload:', res);
+      console.log('Upload success:');
       const path = './' + fileToUpload;
       clearCache(path);
     })

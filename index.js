@@ -54,25 +54,21 @@ bot.command('help', (ctx) =>
 );
 
 // command utama
-bot.on('text', async (ctx) => {
+bot.on('text', (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
-
-  await sendResult(url, ctx, messageId);
+  sendResult(url, ctx, messageId);
 });
 
 // callback
 bot.on('callback_query', async (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
-
   let callbackQuery = ctx.callbackQuery.data;
   callbackQuery = callbackQuery.split(',');
   const formatCode = callbackQuery[0];
   const display_id = callbackQuery[1];
   const info = await getMusicMetadata(display_id, formatCode);
-
   console.log('Metadata:', info);
-
   download(ctx, info);
 });
 

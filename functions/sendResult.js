@@ -53,6 +53,7 @@ module.exports = async (url, ctx, messageId) => {
     })
     .then(() => {
       ctx.deleteMessage(info.textLoad);
+      console.log('Data found!');
       ctx.reply(
         `🎥 Pilih kualitas: `,
         showQuality(formats, audioFileSize, info)

@@ -1,8 +1,6 @@
 const youtubedl = require('youtube-dl-exec');
-const ffmetadata = require('ffmetadata');
 const upload = require('./upload');
-
-ffmetadata.setFfmpegPath('node_modules/ffmpeg-static/ffmpeg');
+const writeMusicTag = require('./writeMusicTag');
 
 module.exports = (ctx, info) => {
   console.log('Downloading...');
@@ -39,34 +37,11 @@ module.exports = (ctx, info) => {
 
   const option = info.formatCode == '140' ? audioOption : videoOption;
 
-  const metadata = {
-    title: info.track || info.judul,
-    artist: info.artis || info.channel,
-  };
-
   youtubedl(`https://youtu.be/${info.display_id}`, option)
     .then((data) => {
-      console.log('Download:', data);
+      console.log('Download success:', data);
       if (info.formatCode == '140') {
-        ffmetadata.write(
-          `${info.display_id}-${info.formatCode}.mp3`,
-          metadata,
-          async (err) => {
-            if (err) {
-              console.error('Error writing metadata', err);
-            } else {
-              console.log('Data written');
-              await ffmetadata.read(
-                `${info.display_id}-${info.formatCode}.mp3`,
-                function (err, data) {
-                  if (err) console.error('Error reading metadata', err);
-                  else console.log(data);
-                }
-              );
-              upload(ctx, info);
-            }
-          }
-        );
+        writeMusicTag(ctx, info);
       } else {
         upload(ctx, info);
       }
