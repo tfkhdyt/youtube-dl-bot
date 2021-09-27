@@ -29,7 +29,7 @@ module.exports = (ctx, info) => {
   const fileToUpload = `${info.display_id}-${info.formatCode}.${extension}`;
   // extension = info.formatCode == '140' ? 'mp3' : 'mp4';
   console.log('Nama file output:', fileToUpload);
-  
+
   const send =
     info.formatCode == '140' ? ctx.replyWithAudio : ctx.replyWithVideo;
   console.log(info.judul);
