@@ -58,6 +58,5 @@ module.exports = async (url, ctx, messageId) => {
         showQuality(formats, audioFileSize, info)
       );
     });
-  console.log(id, judul);
-  return { id, judul };
+  // console.log(id, judul);
 };

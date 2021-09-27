@@ -1,13 +1,18 @@
-const axios = require('axios');
-require('dotenv').config({ path: '../.env' });
+const youtubedl = require('youtube-dl-exec');
 
-const LASTFM_KEY = process.env.LASTFM_KEY;
-
-const getMusicMetadata = (artis, judul) => {
-  axios
-    .get(
-      `http://ws.audioscrobbler.com/2.0/?method=track.search&api_key=${LASTFM_KEY}&artist=${artis}&track=${judul}&format=json&limit=1`
-    )
-    .then((res) => console.log(res.data.results.trackmatches));
+module.exports = async (display_id, formatCode) => {
+  return await youtubedl(`https://youtu.be/${display_id}`, {
+    dumpSingleJson: true,
+    youtubeSkipDashManifest: true,
+  }).then((res) => {
+    let info = {};
+    info.judul = res.title;
+    info.track = res.track;
+    info.artis = res.artist;
+    info.channel = res.channel;
+    info.thumbnail = res.thumbnail;
+    info.formatCode = formatCode;
+    info.display_id = display_id;
+    return info;
+  });
 };
-getMusicMetadata('MxPx', "Let's");

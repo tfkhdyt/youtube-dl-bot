@@ -1,5 +1,8 @@
 const youtubedl = require('youtube-dl-exec');
+const ffmetadata = require('ffmetadata');
 const upload = require('./upload');
+
+ffmetadata.setFfmpegPath('node_modules/ffmpeg-static/ffmpeg');
 
 module.exports = (ctx, info) => {
   console.log('Downloading...');
@@ -34,9 +37,30 @@ module.exports = (ctx, info) => {
   };
 
   const option = info.formatCode == '140' ? audioOption : videoOption;
+
+  const metadata = {
+    title: info.track || info.judul,
+    artist: info.artist || info.channel,
+  };
+
+  const albumArt = {
+    attachments: [info.thumbnail],
+  };
+
   youtubedl(`https://youtu.be/${info.display_id}`, option)
-    .then((data) => {
+    .then(async (data) => {
       console.log('Download:', data);
+      if (info.formatCode == '140') {
+        await ffmetadata.write(
+          `${info.formatCode}.mp3`,
+          metadata,
+          albumArt,
+          (err) => {
+            if (err) console.error('Error writing metadata', err);
+            else console.log('Data written');
+          }
+        );
+      }
       upload(ctx, info);
     })
     .catch((err) => {

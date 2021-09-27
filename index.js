@@ -1,11 +1,11 @@
 // import module
 const { Telegraf } = require('telegraf');
 const { Composer } = require('micro-bot');
-const youtubedl = require('youtube-dl-exec');
 require('dotenv').config();
 
 // import function
 const sendResult = require('./functions/sendResult');
+const getMusicMetadata = require('./functions/getMusicMetadata');
 const download = require('./functions/download');
 
 // deklarasi & inisialisasi env variables
@@ -14,7 +14,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const API_ROOT = process.env.API_ROOT;
 
 // deklarasi global variables
-let url, bot, data;
+let url, bot;
 
 // Atur mode
 switch (NODE_ENV) {
@@ -32,7 +32,7 @@ switch (NODE_ENV) {
 
 // command start
 bot.start((ctx) => {
-  console.log(ctx);
+  // console.log(ctx);
   ctx.replyWithMarkdown(
     `Halo @${ctx.from.username}, selamat datang di [YouTube Downloader Bot](https://t.me/tfkhdyt_ytdl_bot), kirim link video yang ingin anda unduh untuk mengunduh video tersebut.
 Untuk video yang memiliki subtitle, maka secara otomatis semua subtitle itu akan ter-embed ke dalam video.
@@ -58,34 +58,21 @@ bot.on('text', async (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
 
-  const { id: tempId, judul: tempJudul } = await sendResult(
-    url,
-    ctx,
-    messageId
-  );
-  data = {
-    id: tempId,
-    judul: tempJudul,
-  };
-  console.log(data);
+  await sendResult(url, ctx, messageId);
 });
 
 // callback
 bot.on('callback_query', async (ctx) => {
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
+
   let callbackQuery = ctx.callbackQuery.data;
   callbackQuery = callbackQuery.split(',');
   const formatCode = callbackQuery[0];
   const display_id = callbackQuery[1];
-  const judul = await youtubedl(`https://youtu.be/${display_id}`, {
-    simulate: true,
-    getTitle: true,
-  }).then((res) => res);
-  console.log('Judul video:', judul);
+  const info = await getMusicMetadata(display_id, formatCode);
 
-  const info = { formatCode, display_id, judul };
-  // const localData = data;
-  // console.log('Local data:', localData);
+  console.log('Metadata:', info);
+
   download(ctx, info);
 });
 
