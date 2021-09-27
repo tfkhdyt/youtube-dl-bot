@@ -11,13 +11,14 @@ module.exports = (ctx, info) => {
   .then((m) => (info.textLoad = m.message_id));
   //setTimeout(() => { ctx.deleteMessage(textLoad); }, 5000);
   const audioOption = {
-    format: `${info.formatCode}`,
+    extractAudio: true,
     audioFormat: 'mp3',
+    audioQuality: '0',
     c: true,
     ignoreErrors: true,
     externalDownloader: 'ffmpeg',
     verbose: true,
-    output: `%(id)s-${info.formatCode}.mp3`,
+    output: `%(id)s-${info.formatCode}.%(ext)s`,
     ffmpegLocation: 'node_modules/ffmpeg-static/ffmpeg',
     rmCacheDir: true,
   };
