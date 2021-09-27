@@ -6,15 +6,16 @@ module.exports = (ctx, info) => {
   console.log('Writing metadata...');
   const metadata = {
     title: info.track || info.judul,
+    album: info.track || '',
     artist: info.artis || info.channel,
   };
-  const albumArt = {
+  // const albumArt = {
     attachments: [info.albumArt] || []
   };
   ffmetadata.write(
     `${info.display_id}-${info.formatCode}.mp3`,
     metadata,
-    albumArt,
+    // albumArt,
     async (err) => {
       if (err) {
         console.error('Error writing metadata', err);
