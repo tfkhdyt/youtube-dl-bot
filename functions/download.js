@@ -7,8 +7,8 @@ ffmetadata.setFfmpegPath('node_modules/ffmpeg-static/ffmpeg');
 module.exports = (ctx, info) => {
   console.log('Downloading...');
   ctx
-    .replyWithMarkdown('_⬇️ Sedang mengunduh..._')
-    .then((m) => (info.textLoad = m.message_id));
+  .replyWithMarkdown('_⬇️ Sedang mengunduh..._')
+  .then((m) => (info.textLoad = m.message_id));
   //setTimeout(() => { ctx.deleteMessage(textLoad); }, 5000);
   const audioOption = {
     format: `${info.formatCode}`,
@@ -36,7 +36,7 @@ module.exports = (ctx, info) => {
     embedSubs: true,
   };
 
-  const option = info.formatCode == '140' ? audioOption : videoOption;
+  const option = info.formatCode == '140' ? audioOption: videoOption;
 
   const metadata = {
     title: info.track || info.judul,
@@ -44,26 +44,31 @@ module.exports = (ctx, info) => {
   };
 
   youtubedl(`https://youtu.be/${info.display_id}`, option)
-    .then((data) => {
-      console.log('Download:', data);
-      if (info.formatCode == '140') {
-        ffmetadata.write(
-          `${info.display_id}-${info.formatCode}.aac`,
-          metadata,
-          (err) => {
-            if (err) { 
-              console.error('Error writing metadata', err);
-            } else {
-              console.log('Data written');
-              upload(ctx, info);
-            }
+  .then((data) => {
+    console.log('Download:', data);
+    if (info.formatCode == '140') {
+      ffmetadata.write(
+        `${info.display_id}-${info.formatCode}.aac`,
+        metadata,
+        async (err) => {
+          if (err) {
+            console.error('Error writing metadata', err);
+          } else {
+            console.log('Data written');
+            await ffmetadata.read(`${info.display_id}-${info.formatCode}.aac`, function(err, data) {
+              if (err) console.error("Error reading metadata", err);
+              else console.log(data);
+            });
+            upload(ctx,
+              info);
           }
-        );
-      } else {
-        upload(ctx, info);
-      }
-    })
-    .catch((err) => {
-      console.log('Error yang terjadi saat download:', err);
-    });
+        }
+      );
+    } else {
+      upload(ctx, info);
+    }
+  })
+  .catch((err) => {
+    console.log('Error yang terjadi saat download:', err);
+  });
 };
