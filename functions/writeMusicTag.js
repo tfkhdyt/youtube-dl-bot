@@ -10,8 +10,8 @@ module.exports = (ctx, info) => {
     artist: info.artis || info.channel,
   };
   // const albumArt = {
-    attachments: [info.albumArt] || []
-  };
+  //   attachments: [info.albumArt] || []
+  // };
   ffmetadata.write(
     `${info.display_id}-${info.formatCode}.mp3`,
     metadata,

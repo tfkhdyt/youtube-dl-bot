@@ -1,17 +1,18 @@
 const youtubedl = require('youtube-dl-exec');
-const axios = require('axios');
+// const axios = require('axios');
 
-require('dotenv').config({ path: '../.env' });
-const LASTFM_KEY = process.env.LASTFM_KEY;
+// require('dotenv').config({ path: '../.env' });
+// const LASTFM_KEY = process.env.LASTFM_KEY;
 
 module.exports = async (display_id, formatCode) => {
   return await youtubedl(
-  `https://youtu.be/${display_id}`, 
-  //`https://youtu.be/W5ct9ynWya0`, 
-  {
-    dumpSingleJson: true,
-    youtubeSkipDashManifest: true,
-  }).then((res) => {
+    `https://youtu.be/${display_id}`,
+    //`https://youtu.be/W5ct9ynWya0`,
+    {
+      dumpSingleJson: true,
+      youtubeSkipDashManifest: true,
+    }
+  ).then((res) => {
     let info = {};
     info.judul = res.title;
     info.track = res.track;
