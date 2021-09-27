@@ -48,20 +48,25 @@ module.exports = (ctx, info) => {
   };
 
   youtubedl(`https://youtu.be/${info.display_id}`, option)
-    .then(async (data) => {
+    .then((data) => {
       console.log('Download:', data);
       if (info.formatCode == '140') {
-        await ffmetadata.write(
+        ffmetadata.write(
           `${info.display_id}-${info.formatCode}.aac`,
           metadata,
           albumArt,
           (err) => {
-            if (err) console.error('Error writing metadata', err);
-            else console.log('Data written');
+            if (err) { 
+              console.error('Error writing metadata', err);
+            } else {
+              console.log('Data written');
+              upload(ctx, info);
+            }
           }
         );
+      } else {
+        upload(ctx, info);
       }
-      upload(ctx, info);
     })
     .catch((err) => {
       console.log('Error yang terjadi saat download:', err);

@@ -16,9 +16,10 @@ module.exports = (ctx, info) => {
 
   // console.log('message id dari pesan "sedang memproses":', info.textLoad);
 
-  const extension = info.formatCode == '140' ? 'mp3' : 'mp4';
+  let extension = info.formatCode == '140' ? 'aac' : 'mp4';
 
   const fileToUpload = `${info.display_id}-${info.formatCode}.${extension}`;
+  extension = info.formatCode == '140' ? 'mp3' : 'mp4';
   console.log('Nama file output:', fileToUpload);
   console.log();
   fs.readdir('./', (err, files) => {
@@ -54,7 +55,7 @@ module.exports = (ctx, info) => {
       ]),
     }
   )
-    .then((res) => {
+    .then(() => {
       // console.log('Upload:', res);
       const path = './' + fileToUpload;
       clearCache(path);
