@@ -41,7 +41,7 @@ module.exports = (ctx, info) => {
 
   const metadata = {
     title: info.track || info.judul,
-    artist: info.artist || info.channel,
+    artist: info.artis || info.channel,
   };
 
   youtubedl(`https://youtu.be/${info.display_id}`, option)
