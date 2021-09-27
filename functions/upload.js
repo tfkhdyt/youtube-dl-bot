@@ -14,7 +14,7 @@ module.exports = (ctx, info) => {
     ctx.deleteMessage(info.textLoad);
   }, 5000);
 
-  console.log('message id dari pesan "sedang memproses":', info.textLoad);
+  // console.log('message id dari pesan "sedang memproses":', info.textLoad);
 
   const extension = info.formatCode == '140' ? 'mp3' : 'mp4';
 

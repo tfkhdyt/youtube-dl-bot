@@ -12,12 +12,12 @@ module.exports = (ctx, info) => {
   //setTimeout(() => { ctx.deleteMessage(textLoad); }, 5000);
   const audioOption = {
     format: `${info.formatCode}`,
-    audioFormat: 'mp3',
+    // audioFormat: 'aac',
     c: true,
     ignoreErrors: true,
     externalDownloader: 'ffmpeg',
     verbose: true,
-    output: `%(id)s-${info.formatCode}.mp3`,
+    output: `%(id)s-${info.formatCode}.aac`,
     ffmpegLocation: 'node_modules/ffmpeg-static/ffmpeg',
     rmCacheDir: true,
   };
@@ -52,7 +52,7 @@ module.exports = (ctx, info) => {
       console.log('Download:', data);
       if (info.formatCode == '140') {
         await ffmetadata.write(
-          `${info.display_id}-${info.formatCode}.mp3`,
+          `${info.display_id}-${info.formatCode}.aac`,
           metadata,
           albumArt,
           (err) => {
