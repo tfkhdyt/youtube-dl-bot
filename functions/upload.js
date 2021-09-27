@@ -3,6 +3,14 @@ const fs = require('fs');
 const clearCache = require('./clearCache');
 
 module.exports = (ctx, info) => {
+  console.log();
+  fs.readdir('./', (err, files) => {
+    if (err) throw err;
+    files.forEach((file) => {
+      console.log(file);
+    });
+  });
+  console.log();
   console.log('Uploading...');
   ctx.deleteMessage(info.textLoad);
   ctx
@@ -18,17 +26,10 @@ module.exports = (ctx, info) => {
 
   let extension = info.formatCode == '140' ? 'aac' : 'mp4';
 
-  const fileToUpload = `${info.display_id}-${info.formatCode}.${extension}`;
+  const fileToUpload = `${info.display_id}-${info.formatCode}.ffmetadata.${extension}`;
   extension = info.formatCode == '140' ? 'mp3' : 'mp4';
   console.log('Nama file output:', fileToUpload);
-  console.log();
-  fs.readdir('./', (err, files) => {
-    if (err) throw err;
-    files.forEach((file) => {
-      console.log(file);
-    });
-  });
-  console.log();
+  
   const send =
     info.formatCode == '140' ? ctx.replyWithAudio : ctx.replyWithVideo;
   console.log(info.judul);

@@ -43,10 +43,6 @@ module.exports = (ctx, info) => {
     artist: info.artist || info.channel,
   };
 
-  const albumArt = {
-    attachments: [info.thumbnail],
-  };
-
   youtubedl(`https://youtu.be/${info.display_id}`, option)
     .then((data) => {
       console.log('Download:', data);
