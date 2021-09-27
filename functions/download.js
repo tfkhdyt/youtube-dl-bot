@@ -54,7 +54,6 @@ module.exports = (ctx, info) => {
         ffmetadata.write(
           `${info.display_id}-${info.formatCode}.aac`,
           metadata,
-          albumArt,
           (err) => {
             if (err) { 
               console.error('Error writing metadata', err);
