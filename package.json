@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.4",
     "dotenv": "^10.0.0",
     "ffmetadata": "^1.7.0",
     "ffmpeg-static": "^4.4.0",

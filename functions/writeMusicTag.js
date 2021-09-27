@@ -8,9 +8,13 @@ module.exports = (ctx, info) => {
     title: info.track || info.judul,
     artist: info.artis || info.channel,
   };
+  const albumArt = {
+    attachments: [info.albumArt] || []
+  };
   ffmetadata.write(
     `${info.display_id}-${info.formatCode}.mp3`,
     metadata,
+    albumArt,
     async (err) => {
       if (err) {
         console.error('Error writing metadata', err);
