@@ -26,8 +26,8 @@ module.exports = (ctx, info) => {
 
   let extension = info.formatCode == '140' ? 'aac' : 'mp4';
 
-  const fileToUpload = `${info.display_id}-${info.formatCode}.ffmetadata.${extension}`;
-  extension = info.formatCode == '140' ? 'mp3' : 'mp4';
+  const fileToUpload = `${info.display_id}-${info.formatCode}.${extension}`;
+  // extension = info.formatCode == '140' ? 'mp3' : 'mp4';
   console.log('Nama file output:', fileToUpload);
   
   const send =
