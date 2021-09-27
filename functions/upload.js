@@ -55,7 +55,7 @@ module.exports = (ctx, info) => {
     }
   )
     .then((res) => {
-      console.log('Upload:', res);
+      // console.log('Upload:', res);
       const path = './' + fileToUpload;
       clearCache(path);
     })

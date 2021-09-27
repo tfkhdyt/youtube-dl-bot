@@ -52,7 +52,7 @@ module.exports = (ctx, info) => {
       console.log('Download:', data);
       if (info.formatCode == '140') {
         await ffmetadata.write(
-          `${info.formatCode}.mp3`,
+          `${info.display_id}-${info.formatCode}.mp3`,
           metadata,
           albumArt,
           (err) => {
