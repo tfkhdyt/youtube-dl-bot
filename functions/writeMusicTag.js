@@ -16,18 +16,18 @@ module.exports = (ctx, info) => {
     `${info.display_id}-${info.formatCode}.mp3`,
     metadata,
     // albumArt,
-    async (err) => {
+    (err) => {
       if (err) {
         console.error('Error writing metadata', err);
       } else {
         console.log('Data written');
-        await ffmetadata.read(
+        /*ffmetadata.read(
           `${info.display_id}-${info.formatCode}.mp3`,
           (err, data) => {
-            if (err) console.error('Error reading metadata', err);
-            else console.log(data);
+            if (err) return console.error('Error reading metadata', err);
+           console.log(data);
           }
-        );
+        );*/
         upload(ctx, info);
       }
     }
