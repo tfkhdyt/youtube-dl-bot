@@ -27,9 +27,9 @@ module.exports = (formats, audioFileSize, info) => {
 
   return Keyboard.make(keyCallback, {
     wrap: (row, index) => {
-      console.log(row, index);
+      // console.log(row, index);
       if (index == 1) return row.length == 1;
       return row.length == 2;
-    }
+    },
   }).inline();
 };
