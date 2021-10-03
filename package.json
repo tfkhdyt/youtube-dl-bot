@@ -11,14 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.4",
     "dotenv": "^10.0.0",
     "ffmetadata": "^1.7.0",
     "ffmpeg-static": "^4.4.0",
     "micro-bot": "^2.5.3",
     "telegraf": "^4.4.2",
     "telegram-keyboard": "^2.2.6",
-    "woke-dyno": "^0.0.4",
     "youtube-dl-exec": "^1.2.6"
   },
   "devDependencies": {

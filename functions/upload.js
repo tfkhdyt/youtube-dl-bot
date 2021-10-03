@@ -33,7 +33,7 @@ module.exports = (ctx, info) => {
   console.log(info.judul);
   send(
     {
-      source: fileToUpload,
+      source: fs.createReadStream(fileToUpload),
       filename: info.judul + `.${extension}`,
     },
     {
