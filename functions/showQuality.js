@@ -26,7 +26,10 @@ module.exports = (formats, audioFileSize, info) => {
   });
 
   return Keyboard.make(keyCallback, {
-    columns: 2,
-    pattern: [1],
+    wrap: (row, index) => {
+      console.log(row, index);
+      if (index == 1) return row.length == 1;
+      return row.length == 2;
+    }
   }).inline();
 };
