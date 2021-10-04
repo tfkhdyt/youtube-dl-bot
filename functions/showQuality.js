@@ -1,6 +1,7 @@
 const { Keyboard, Key } = require('telegram-keyboard');
 const formatBytes = require('./formatBytes');
 const getIcon = require('./getIcon');
+const getPattern = require('./getPattern');
 
 module.exports = (formats, audioFileSize, info) => {
   const keyCallback = formats.map((format) => {
@@ -24,12 +25,18 @@ module.exports = (formats, audioFileSize, info) => {
       `${id},${info.display_id}`
     );
   });
+  const quality = formats.map((format) => {
+    return format.format_note == 'tiny' ? 'Audio' : format.format_note;
+  });
+  const pattern = getPattern(quality);
+  console.log('Pattern:', pattern);
 
   return Keyboard.make(keyCallback, {
-    wrap: (row, index) => {
+    /*wrap: (row, index) => {
       // console.log(row, index);
       if (index == 1) return row.length == 1;
       return row.length == 2;
-    },
+    },*/
+    pattern
   }).inline();
 };
