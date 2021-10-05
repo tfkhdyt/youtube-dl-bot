@@ -5,6 +5,6 @@ module.exports = (formats) => {
   formats = formats.filter(
     (format) => format.format_id == '140' || format.acodec == 'none'
   );
-  // console.log(formats);
+  console.log(formats);
   return { formats, audioFileSize };
 };
