@@ -7,6 +7,7 @@ module.exports = (ctx, info) => {
   ctx
     .replyWithMarkdown(
       `_⬇️ Sedang mengunduh..._
+      
 📄 *Judul*: \`${info.judul}\`
 📹 *Kualitas*: \`${info.quality}\`
 💾 *Ukuran*: \`${info.fileSize}\``

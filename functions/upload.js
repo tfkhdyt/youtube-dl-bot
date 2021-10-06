@@ -16,7 +16,7 @@ module.exports = (ctx, info) => {
   ctx.deleteMessage(info.textLoad);
   ctx
     .replyWithMarkdown(
-      `_⬆️ Sedang mengunggah..._\nProses ini mungkin sedikit lebih lama`
+      `_⬆️ Sedang mengunggah..._\n\nProses ini mungkin sedikit lebih lama`
     )
     .then((m) => (info.textLoad = m.message_id));
   setTimeout(() => {
@@ -41,6 +41,7 @@ module.exports = (ctx, info) => {
     },
     {
       caption: metadata,
+      parse_mode: 'Markdown',
       ...Markup.inlineKeyboard([
         [
           Markup.button.url('💵 Donasi', 'https://donate.tfkhdyt.my.id/'),
