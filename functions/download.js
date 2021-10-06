@@ -5,10 +5,12 @@ const writeMusicTag = require('./writeMusicTag');
 module.exports = (ctx, info) => {
   console.log('Downloading...');
   ctx
-    .replyWithMarkdown(`_⬇️ Sedang mengunduh..._
+    .replyWithMarkdown(
+      `_⬇️ Sedang mengunduh..._
 *Judul*: \`${info.judul}\`
 *Kualitas*: \`${info.quality}\`
-*Ukuran*: \`${info.fileSize}\``)
+*Ukuran*: \`${info.fileSize}\``
+    )
     .then((m) => (info.textLoad = m.message_id));
   //setTimeout(() => { ctx.deleteMessage(textLoad); }, 5000);
   const audioOption = {

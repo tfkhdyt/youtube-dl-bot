@@ -57,7 +57,11 @@ bot.command('help', (ctx) =>
 bot.on('text', async (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
-  const { metadata, metadataMessage, judul } = await sendResult(url, ctx, messageId);
+  const { metadata, metadataMessage, judul } = await sendResult(
+    url,
+    ctx,
+    messageId
+  );
   title = { metadata, metadataMessage, judul };
   console.log(title);
 });

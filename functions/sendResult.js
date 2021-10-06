@@ -61,7 +61,9 @@ module.exports = async (url, ctx, messageId) => {
       return m.message_id;
     });
   return {
-    metadata, metadataMessage, judul
+    metadata,
+    metadataMessage,
+    judul,
   };
   // console.log(id, judul);
 };

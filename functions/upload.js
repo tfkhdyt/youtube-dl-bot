@@ -3,6 +3,7 @@ const fs = require('fs');
 const clearCache = require('./clearCache');
 
 module.exports = (ctx, info) => {
+  const metadata = info.metadata;
   fs.readdir('./', (err, files) => {
     if (err) throw err;
     files.forEach((file) => {
@@ -37,6 +38,7 @@ module.exports = (ctx, info) => {
       filename: info.judul + `.${extension}`,
     },
     {
+      caption: metadata,
       ...Markup.inlineKeyboard([
         [
           Markup.button.url('💵 Donasi', 'https://donate.tfkhdyt.my.id/'),
