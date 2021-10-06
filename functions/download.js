@@ -20,11 +20,12 @@ module.exports = (ctx, info) => {
     audioQuality: '0',
     c: true,
     // ignoreErrors: true,
+    socketTimeout: '1',
+    retries: 'infinite',
     verbose: true,
     output: `%(id)s-${info.formatCode}.%(ext)s`,
     ffmpegLocation: 'node_modules/ffmpeg-static/ffmpeg',
     rmCacheDir: true,
-    externalDownloader: 'ffmpeg',
   };
 
   const videoOption = {
@@ -32,13 +33,14 @@ module.exports = (ctx, info) => {
     mergeOutputFormat: 'mp4',
     c: true,
     // ignoreErrors: true,
+    socketTimeout: '1',
+    retries: 'infinite',
     verbose: true,
     output: `%(id)s-${info.formatCode}`,
     ffmpegLocation: 'node_modules/ffmpeg-static/ffmpeg',
     rmCacheDir: true,
     allSubs: true,
     embedSubs: true,
-    externalDownloader: 'ffmpeg',
   };
 
   const option = info.formatCode == '140' ? audioOption : videoOption;
