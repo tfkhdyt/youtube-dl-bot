@@ -14,7 +14,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const API_ROOT = process.env.API_ROOT;
 
 // deklarasi global variables
-let url, bot;
+let url, bot, textLoad;
 
 // Atur mode
 switch (NODE_ENV) {
@@ -57,11 +57,12 @@ bot.command('help', (ctx) =>
 bot.on('text', (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
-  sendResult(url, ctx, messageId);
+  textLoad = sendResult(url, ctx, messageId);
 });
 
 // callback
 bot.on('callback_query', async (ctx) => {
+  ctx.deleteMessage(textLoad);
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
   let callbackQuery = ctx.callbackQuery.data;
   callbackQuery = callbackQuery.split(',');

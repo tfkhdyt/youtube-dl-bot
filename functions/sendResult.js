@@ -47,17 +47,18 @@ module.exports = async (url, ctx, messageId) => {
 👍🏼 *Like*: \`${jmlLike} (${persenLike})\`
 👎🏼 *Dislike*: \`${jmlDislike} (${persenDislike})\``;
 
-  ctx
+  return ctx
     .replyWithMarkdown(metadata, {
       reply_to_message_id: messageId,
     })
-    .then(() => {
+    .then((m) => {
       ctx.deleteMessage(info.textLoad);
       console.log('Data found!');
       ctx.reply(
         `🎥 Pilih kualitas: `,
         showQuality(formats, audioFileSize, info)
       );
+      return m.message_id;
     });
   // console.log(id, judul);
 };
