@@ -3,7 +3,9 @@ const fs = require('fs');
 const clearCache = require('./clearCache');
 
 module.exports = (ctx, info) => {
-  const metadata = info.metadata;
+  const metadata = `${info.metadata}
+📹 *Kualitas*: \`${info.quality}\`
+💾 *Ukuran*: \`${info.fileSize}\``;
   fs.readdir('./', (err, files) => {
     if (err) throw err;
     files.forEach((file) => {

@@ -7,9 +7,9 @@ module.exports = (ctx, info) => {
   ctx
     .replyWithMarkdown(
       `_⬇️ Sedang mengunduh..._
-*Judul*: \`${info.judul}\`
-*Kualitas*: \`${info.quality}\`
-*Ukuran*: \`${info.fileSize}\``
+📄 *Judul*: \`${info.judul}\`
+📹 *Kualitas*: \`${info.quality}\`
+💾 *Ukuran*: \`${info.fileSize}\``
     )
     .then((m) => (info.textLoad = m.message_id));
   //setTimeout(() => { ctx.deleteMessage(textLoad); }, 5000);
