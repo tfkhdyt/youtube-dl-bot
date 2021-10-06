@@ -47,7 +47,7 @@ module.exports = async (url, ctx, messageId) => {
 👍🏼 *Like*: \`${jmlLike} (${persenLike})\`
 👎🏼 *Dislike*: \`${jmlDislike} (${persenDislike})\``;
 
-  return ctx
+  const metadataMessage = await ctx
     .replyWithMarkdown(metadata, {
       reply_to_message_id: messageId,
     })
@@ -60,5 +60,8 @@ module.exports = async (url, ctx, messageId) => {
       );
       return m.message_id;
     });
+  return {
+    metadata, metadataMessage, judul
+  };
   // console.log(id, judul);
 };

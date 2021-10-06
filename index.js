@@ -14,7 +14,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const API_ROOT = process.env.API_ROOT;
 
 // deklarasi global variables
-let url, bot, textLoad;
+let url, bot, title;
 
 // Atur mode
 switch (NODE_ENV) {
@@ -57,19 +57,26 @@ bot.command('help', (ctx) =>
 bot.on('text', async (ctx) => {
   url = ctx.message.text;
   const messageId = ctx.update.message.message_id;
-  textLoad = await sendResult(url, ctx, messageId);
+  const { metadata, metadataMessage, judul } = await sendResult(url, ctx, messageId);
+  title = { metadata, metadataMessage, judul };
+  console.log(title);
 });
 
 // callback
 bot.on('callback_query', async (ctx) => {
-  const metadataMessage = textLoad;
+  const metadata = title.metadata;
+  const metadataMessage = title.metadataMessage;
+  const judul = title.judul;
   ctx.deleteMessage(metadataMessage);
   ctx.deleteMessage(ctx.update.callback_query.message.message_id);
   let callbackQuery = ctx.callbackQuery.data;
   callbackQuery = callbackQuery.split(',');
   const formatCode = callbackQuery[0];
   const display_id = callbackQuery[1];
-  const info = await getMusicMetadata(display_id, formatCode);
+  const quality = callbackQuery[2];
+  const fileSize = callbackQuery[3];
+  let info = await getMusicMetadata(display_id, formatCode);
+  info = { ...info, quality, judul, fileSize, metadata };
   console.log('Metadata:', info);
   download(ctx, info);
 });
