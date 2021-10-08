@@ -27,6 +27,9 @@ module.exports = (ctx, info) => {
     output: `%(id)s-${info.formatCode}.%(ext)s`,
     ffmpegLocation: 'node_modules/ffmpeg-static/ffmpeg',
     rmCacheDir: true,
+    noWarnings: true,
+    noCallHome: true,
+    noCheckCertificate: true,
   };
 
   const videoOption = {
@@ -43,6 +46,9 @@ module.exports = (ctx, info) => {
     rmCacheDir: true,
     allSubs: true,
     embedSubs: true,
+    noWarnings: true,
+    noCallHome: true,
+    noCheckCertificate: true,
   };
 
   const option = info.formatCode == '140' ? audioOption : videoOption;
